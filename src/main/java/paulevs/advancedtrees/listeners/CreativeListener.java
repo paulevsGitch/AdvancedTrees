@@ -16,7 +16,6 @@ public class CreativeListener {
 	public void onTabInit(TabRegistryEvent event) {
 		tab = new SimpleTab(AdvancedTrees.makeID("at_tab"), (ItemConvertible) ItemBase.apple);
 		event.register(tab);
-		
-		CreativeListener.tab.addItem(new ItemInstance(BlockListener.oakLog));
+		BlockListener.modBlocks.forEach(block -> CreativeListener.tab.addItem(new ItemInstance(block)));
 	}
 }

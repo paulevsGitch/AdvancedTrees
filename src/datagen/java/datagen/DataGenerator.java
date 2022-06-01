@@ -1,4 +1,4 @@
-package paulevs.advancedtrees.datagen;
+package datagen;
 
 import net.modificationstation.stationapi.api.util.math.Direction;
 
