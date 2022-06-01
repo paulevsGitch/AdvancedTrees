@@ -10,46 +10,23 @@ import net.minecraft.util.maths.Box;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import net.modificationstation.stationapi.api.state.StateManager;
-import net.modificationstation.stationapi.api.state.property.IntProperty;
-import net.modificationstation.stationapi.api.template.block.TemplateBlockBase;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 import net.modificationstation.stationapi.api.util.math.Direction.AxisDirection;
+import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.bhcore.util.BlocksUtil;
-import paulevs.bhcore.util.ToolsUtil;
 
-public class ATLogBlock extends ATTemplateNotFullBlock {
+public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	private static final Box BOUNDING_BOX = Box.create(0, 0, 0, 0, 0, 0);
-	private static int initMinAge;
-	private static int initMaxAge;
-	private final int minAge;
-	private final int maxAge;
-	private IntProperty age;
 	
-	public ATLogBlock(Identifier identifier) {
-		this(identifier, Material.WOOD);
-		setSounds(WOOD_SOUNDS);
-		setBlastResistance(0.5F);
-		setHardness(1F);
-		ToolsUtil.setAxe(this, 0);
-		setDefaultState(getDefaultState().with(age, minAge).with(ATBlockProperties.DIRECTION, Direction.DOWN));
-	}
-	
-	public ATLogBlock(Identifier identifier, Material material) {
+	public ATLoglikeBlock(Identifier identifier, Material material) {
 		super(identifier, material);
-		this.minAge = initMinAge;
-		this.maxAge = initMaxAge;
-	}
-	
-	public BlockState getWithAge(BlockState state, int age) {
-		return state.with(this.age, age);
 	}
 	
 	@Override
 	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
+		super.appendProperties(builder);
 		builder.add(ATBlockProperties.DIRECTION);
-		age = ATBlockProperties.getAge(initMinAge, initMaxAge);
-		builder.add(age);
 	}
 	
 	@Override
@@ -64,7 +41,7 @@ public class ATLogBlock extends ATTemplateNotFullBlock {
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
 		if (state.getBlock() != this) return super.getCollisionShape(level, x, y, z);
 		Direction dir = state.get(ATBlockProperties.DIRECTION);
-		int age = state.get(this.age);
+		int age = getAge(state);
 		updateBox(age, dir);
 		return BOUNDING_BOX.method_102(x, y, z);
 	}
@@ -79,7 +56,7 @@ public class ATLogBlock extends ATTemplateNotFullBlock {
 	public void updateBoundingBox(BlockView tileView, int x, int y, int z) {
 		BlockState state = BlocksUtil.getBlockState(tileView, x, y, z);
 		Direction dir = state.get(ATBlockProperties.DIRECTION);
-		int age = state.get(this.age);
+		int age = getAge(state);
 		updateBox(age, dir);
 		setBoundingBox(
 			(float) BOUNDING_BOX.minX,
@@ -91,12 +68,11 @@ public class ATLogBlock extends ATTemplateNotFullBlock {
 		);
 	}
 	
-	public static void setAgeLimits(int minAge, int maxAge) {
-		initMinAge = minAge;
-		initMaxAge = maxAge;
+	public int getAge(BlockState state) {
+		return 1;
 	}
 	
-	private static void updateBox(int age, Direction dir) {
+	protected void updateBox(int age, Direction dir) {
 		float min = (7 - age) / 16F;
 		float max = (9 + age) / 16F;
 		BOUNDING_BOX.method_99(min, min, min, max, max, max);
