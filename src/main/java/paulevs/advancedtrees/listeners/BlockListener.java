@@ -13,6 +13,7 @@ import paulevs.advancedtrees.blocks.ATDynamicBlock;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSapling;
 import paulevs.advancedtrees.trees.TreeBehaviour;
+import paulevs.advancedtrees.trees.TreeBehaviours;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
 
@@ -29,13 +30,13 @@ public class BlockListener {
 		BlockRegistry registry = event.registry;
 		
 		oakLog = registerLogStatic(registry, AdvancedTrees.makeID("oak_log_static"), 1, 7);
-		ATDynamicBlock dLog = registerLogDynamic(registry, AdvancedTrees.makeID("oak_log_dynamic"), 1, TreeUtil.SIMPLE_TREE);
+		ATDynamicBlock dLog = registerLogDynamic(registry, AdvancedTrees.makeID("oak_log_dynamic"), 1, TreeBehaviours.SIMPLE_TREE, oakLog);
 		registerSampling(registry, AdvancedTrees.makeID("oak_sapling"), dLog);
 	}
 	
 	// TODO remove
 	// For debug only!
-	@EventListener
+	/*@EventListener
 	public void registerColor(BlockColoursRegisterEvent event) {
 		int[] rgb = new int[] {
 			Color.RED.getRGB(),
@@ -52,10 +53,10 @@ public class BlockListener {
 			return rgb[context.getGeneration()];
 		};
 		colors.registerColourProvider(provider, oakLog);
-	}
+	}*/
 	
-	private ATDynamicBlock registerLogDynamic(BlockRegistry registry, Identifier id, int minAge, TreeBehaviour behaviour) {
-		ATDynamicBlock log = new ATDynamicBlock(id, minAge, behaviour);
+	private ATDynamicBlock registerLogDynamic(BlockRegistry registry, Identifier id, int minAge, TreeBehaviour behaviour, ATStaticLogBlock staticLogBlock) {
+		ATDynamicBlock log = new ATDynamicBlock(id, minAge, behaviour, staticLogBlock);
 		registry.register(id, log);
 		//modBlocks.add(log);
 		return log;

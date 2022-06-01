@@ -7,6 +7,7 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLoglikeBlock;
+import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
@@ -20,6 +21,7 @@ public final class TreeContext {
 	private int distanceToSplit;
 	private int generation;
 	private BlockState block;
+	private ATStaticLogBlock staticLogBlock;
 	
 	private TreeContext() {}
 	
@@ -83,7 +85,16 @@ public final class TreeContext {
 		return block;
 	}
 	
-	public void update(BlockView level, int x, int y, int z) {
+	/**
+	 * Get static block for this tree.
+	 * @return
+	 */
+	public ATStaticLogBlock getStaticLogBlock() {
+		return staticLogBlock;
+	}
+	
+	public void update(BlockView level, int x, int y, int z, ATStaticLogBlock staticLogBlock) {
+		this.staticLogBlock = staticLogBlock;
 		block = BlocksUtil.getBlockState(level, x, y, z);
 		blockPos.set(x, y, z);
 		treePos.set(x, y, z);

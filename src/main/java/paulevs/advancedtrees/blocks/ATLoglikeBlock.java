@@ -14,6 +14,7 @@ import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 import net.modificationstation.stationapi.api.util.math.Direction.AxisDirection;
 import paulevs.advancedtrees.trees.TreeContext;
+import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
 public class ATLoglikeBlock extends ATTemplateNotFullBlock {
@@ -66,6 +67,18 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 			(float) BOUNDING_BOX.maxY,
 			(float) BOUNDING_BOX.maxZ
 		);
+	}
+	
+	@Override
+	public void onAdjacentBlockUpdate(Level level, int x, int y, int z, int face) {
+		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
+		Vec3I pos = new Vec3I(x, y, z).move(state.get(ATBlockProperties.DIRECTION));
+		state = BlocksUtil.getBlockState(level, pos);
+		if (state.getBlock() instanceof ATLoglikeBlock || state.getBlock() == GRASS || state.getBlock() == DIRT) {
+			return;
+		}
+		this.drop(level, x, y, z, level.getTileMeta(x, y, z));
+		level.setTile(x, y, z, 0);
 	}
 	
 	public int getAge(BlockState state) {

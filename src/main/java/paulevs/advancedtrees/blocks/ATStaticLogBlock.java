@@ -2,13 +2,13 @@ package paulevs.advancedtrees.blocks;
 
 import net.minecraft.block.BlockBase;
 import net.minecraft.block.material.Material;
-import net.minecraft.level.Level;
+import net.minecraft.util.maths.MathHelper;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.state.property.IntProperty;
 import net.modificationstation.stationapi.api.util.math.Direction;
-import paulevs.bhcore.util.BlocksUtil;
+import paulevs.bhcore.util.MathUtil;
 import paulevs.bhcore.util.ToolsUtil;
 
 public class ATStaticLogBlock extends ATLoglikeBlock {
@@ -34,7 +34,11 @@ public class ATStaticLogBlock extends ATLoglikeBlock {
 	}
 	
 	public BlockState getWithAge(BlockState state, int age) {
-		return state.with(this.age, age);
+		return state.with(this.age, MathUtil.clamp(age, minAge, maxAge));
+	}
+	
+	public BlockState getWithAge(BlockState state, float delta) {
+		return state.with(this.age, MathHelper.floor(MathUtil.lerp(minAge, maxAge, delta) + 0.5F));
 	}
 	
 	@Override
