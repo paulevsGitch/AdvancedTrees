@@ -1,0 +1,36 @@
+{
+	"schemaVersion": 1,
+	"id": "advancedtrees",
+	"version": "${version}",
+
+	"name": "AdvancedTrees",
+	"description": "Add complex dynamic trees with grow cycle",
+	"authors": [
+		"paulevs"
+	],
+	"contact": {
+		"homepage": "",
+		"sources": "",
+		"issues": "",
+		"discord": ""
+	},
+
+	"license": "CC0-1.0",
+	"icon": "assets/advancedtrees/icon.png",
+
+	"environment": "*",
+	"entrypoints": {
+		"stationapi:event_bus": [
+			"paulevs.advancedtrees.listeners.BlockListener",
+			"paulevs.advancedtrees.listeners.CreativeListener"
+		]
+	},
+	"mixins": [],
+
+	"depends": {
+		"minecraft": "1.0.0-beta.7.3",
+		"bhcore": "*",
+		"stationapi": "*",
+		"bhcreative": "*"
+	}
+}
