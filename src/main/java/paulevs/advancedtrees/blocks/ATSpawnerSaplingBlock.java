@@ -10,12 +10,16 @@ import paulevs.bhcore.util.BlocksUtil;
 
 import java.util.function.Supplier;
 
-public class ATSpawnerSapling extends ATTemplateNotFullBlock {
-	private Supplier<AdvancedTreeStructure> structureSupplier;
+public class ATSpawnerSaplingBlock extends ATTemplateNotFullBlock {
+	private final Supplier<AdvancedTreeStructure> structureSupplier;
 	
-	public ATSpawnerSapling(Identifier identifier, Supplier<AdvancedTreeStructure> structureSupplier) {
-		super(identifier, Material.PLANT);
+	public ATSpawnerSaplingBlock(Identifier identifier, Supplier<AdvancedTreeStructure> structureSupplier) {
+		this(identifier, Material.PLANT, structureSupplier);
 		setSounds(GRASS_SOUNDS);
+	}
+	
+	public ATSpawnerSaplingBlock(Identifier identifier, Material material, Supplier<AdvancedTreeStructure> structureSupplier) {
+		super(identifier, material);
 		this.structureSupplier = structureSupplier;
 	}
 	

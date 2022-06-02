@@ -3,9 +3,8 @@ package paulevs.advancedtrees.trees.structure;
 import net.minecraft.level.Level;
 import net.minecraft.level.structure.Structure;
 import net.modificationstation.stationapi.api.util.math.Direction;
-import paulevs.advancedtrees.blocks.ATDynamicBlock;
-import paulevs.advancedtrees.blocks.ATSpawnerSapling;
-import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
+import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
+import paulevs.advancedtrees.blocks.ATSpawnerSaplingBlock;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
@@ -17,19 +16,17 @@ import java.util.Set;
 
 public class AdvancedTreeStructure extends Structure {
 	private static final Direction[] DIRECTIONS = Direction.values();
-	private final TreeBehaviour behaviour;
 	private final SpawnChecker checker;
-	private final ATDynamicBlock block;
+	private final ATDynamicLogBlock block;
 	
-	public AdvancedTreeStructure(ATDynamicBlock block, TreeBehaviour behaviour, SpawnChecker checker) {
-		this.behaviour = behaviour;
+	public AdvancedTreeStructure(ATDynamicLogBlock block, SpawnChecker checker) {
 		this.checker = checker;
 		this.block = block;
 	}
 	
 	@Override
 	public boolean generate(Level level, Random random, int x, int y, int z) {
-		if (!checker.canSpawn(level, x, y, z) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSapling)) {
+		if (!checker.canSpawn(level, x, y, z) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSaplingBlock)) {
 			return false;
 		}
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());

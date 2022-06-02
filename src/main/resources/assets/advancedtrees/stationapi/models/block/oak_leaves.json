@@ -1,6 +1,6 @@
 {
 	"parent": "advancedtrees:block/leaves",
 	"textures": {
-		"all": "advancedtrees:block/oak_leaves"
+		"all": "minecraft:block/oak_leaves"
 	}
 }

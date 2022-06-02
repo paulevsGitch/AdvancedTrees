@@ -11,16 +11,16 @@ import paulevs.bhcore.util.ToolsUtil;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public class ATDynamicBlock extends ATLoglikeBlock {
+public class ATDynamicLogBlock extends ATLoglikeBlock {
 	private final Supplier<TreeBehaviour> behaviourSupplier;
 	private final int age;
 	
-	public ATDynamicBlock(Identifier identifier, int age, Supplier<TreeBehaviour> behaviourSupplier) {
+	public ATDynamicLogBlock(Identifier identifier, int age, Supplier<TreeBehaviour> behaviourSupplier) {
 		this(identifier, Material.WOOD, age, behaviourSupplier);
 		ToolsUtil.setAxe(this, 0);
 	}
 	
-	public ATDynamicBlock(Identifier identifier, Material material, int age, Supplier<TreeBehaviour> behaviourSupplier) {
+	public ATDynamicLogBlock(Identifier identifier, Material material, int age, Supplier<TreeBehaviour> behaviourSupplier) {
 		super(identifier, material);
 		setTicksRandomly(true);
 		this.age = age;
