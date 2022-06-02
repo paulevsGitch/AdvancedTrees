@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"direction=down": { "model": "advancedtrees:block/cactus_log_2" },
+		"direction=up": { "model": "advancedtrees:block/cactus_log_2", "x": 180 },
+		"direction=east": { "model": "advancedtrees:block/cactus_log_2", "x": 90, "y": 180 },
+		"direction=west": { "model": "advancedtrees:block/cactus_log_2", "x": 90 },
+		"direction=north": { "model": "advancedtrees:block/cactus_log_2", "x": 90, "y": 90 },
+		"direction=south": { "model": "advancedtrees:block/cactus_log_2", "x": 90, "y": 270 }
+	}
+}

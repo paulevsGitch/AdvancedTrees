@@ -1,0 +1,20 @@
+{
+	"parent": "block/block",
+	"textures": {
+		"texture": "advancedtrees:block/cactus_side_2"
+	},
+	"elements": [ 	 
+		{
+			"from": [ 5, 2, 5 ],
+			"to": [ 11, 14, 11 ],
+			"faces": {
+				"down": { "uv": [ 5, 5, 11, 11 ], "texture": "#texture" },
+				"up": { "uv": [ 5, 5, 11, 11 ], "texture": "#texture" },
+				"north": { "uv": [ 5, 2, 11, 14 ], "texture": "#texture" },
+				"south": { "uv": [ 5, 2, 11, 14 ], "texture": "#texture" },
+				"west": { "uv": [ 5, 2, 11, 14 ], "texture": "#texture" },
+				"east": { "uv": [ 5, 2, 11, 14 ], "texture": "#texture" }
+			}
+		}
+	]
+}
