@@ -38,20 +38,9 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		BlocksUtil.setBlockState(level, x, y, z, state);
 	}
 	
-	/*@Override
-	public Box getCollisionShape(Level level, int x, int y, int z) {
-		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
-		if (state.getBlock() != this) return super.getCollisionShape(level, x, y, z);
-		Direction dir = state.get(ATBlockProperties.DIRECTION);
-		int age = getAge(state);
-		updateBox(age, dir);
-		return BOUNDING_BOX.method_102(x, y, z);
-	}*/
-	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public Box getOutlineShape(Level level, int x, int y, int z) {
-		//return getCollisionShape(level, x, y, z);
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
 		if (state.getBlock() != this) return super.getCollisionShape(level, x, y, z);
 		Direction dir = state.get(ATBlockProperties.DIRECTION);
@@ -103,18 +92,19 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		float max = (9 + age) / 16F;
 		BOUNDING_BOX.method_99(min, min, min, max, max, max);
 		
+		float distance = min - (max - 1F);
 		boolean negative = dir.direction == AxisDirection.NEGATIVE;
 		if (dir.axis == Axis.X) {
-			if (negative) BOUNDING_BOX.minX -= 1;
-			else BOUNDING_BOX.maxX += 1;
+			if (negative) BOUNDING_BOX.minX -= distance;
+			else BOUNDING_BOX.maxX += distance;
 		}
 		else if (dir.axis == Axis.Y) {
-			if (negative) BOUNDING_BOX.minY -= 1;
+			if (negative) BOUNDING_BOX.minY -= distance;
 			else BOUNDING_BOX.maxY += 1;
 		}
 		else {
-			if (negative) BOUNDING_BOX.minZ -= 1;
-			else BOUNDING_BOX.maxZ += 1;
+			if (negative) BOUNDING_BOX.minZ -= distance;
+			else BOUNDING_BOX.maxZ += distance;
 		}
 	}
 }
