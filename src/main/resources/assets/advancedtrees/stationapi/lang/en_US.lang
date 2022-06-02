@@ -1,3 +1,5 @@
-item.brush.name=Brush
-item.spatula.name=Spatula
-tab.colorizer_tab.name=Colorizer
+tab.at_tab.name=Advanced Trees
+block.oak_sapling.name=Oak Sapling
+block.oak_spawner_sapling.name=Oak Spawner Sapling
+item.oak_sapling.name=Oak Sapling
+item.oak_spawner_sapling.name=Oak Spawner Sapling
