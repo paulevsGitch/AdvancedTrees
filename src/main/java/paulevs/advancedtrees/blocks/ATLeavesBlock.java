@@ -21,6 +21,7 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	
 	public ATLeavesBlock(Identifier identifier, Material material) {
 		super(identifier, material);
+		setDefaultState(getDefaultState().with(ATBlockProperties.DIRECTION, Direction.DOWN).with(ATBlockProperties.CONNECTED, false));
 	}
 	
 	@Override

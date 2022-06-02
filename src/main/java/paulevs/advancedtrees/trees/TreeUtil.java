@@ -1,5 +1,6 @@
 package paulevs.advancedtrees.trees;
 
+import net.minecraft.block.BlockBase;
 import net.minecraft.block.Fluid;
 import net.minecraft.block.Leaves;
 import net.minecraft.level.Level;
@@ -7,6 +8,7 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
+import paulevs.advancedtrees.blocks.ATLeavesBlock;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
@@ -51,7 +53,9 @@ public class TreeUtil {
 	
 	// TODO Replace condition with tags
 	public static boolean canGrow(BlockState state) {
-		return state.isAir() || state.getBlock() instanceof Fluid || state.getBlock() instanceof Leaves;
+		if (state.isAir()) return true;
+		BlockBase block = state.getBlock();
+		return block instanceof ATLeavesBlock || block instanceof Leaves || block instanceof Fluid;
 	}
 	
 	/**

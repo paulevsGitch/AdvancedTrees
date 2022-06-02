@@ -18,16 +18,18 @@ import java.util.Set;
 public class AdvancedTreeStructure extends Structure {
 	private static final Direction[] DIRECTIONS = Direction.values();
 	private final TreeBehaviour behaviour;
+	private final SpawnChecker checker;
 	private final ATDynamicBlock block;
 	
-	public AdvancedTreeStructure(ATDynamicBlock block, TreeBehaviour behaviour) {
+	public AdvancedTreeStructure(ATDynamicBlock block, TreeBehaviour behaviour, SpawnChecker checker) {
 		this.behaviour = behaviour;
+		this.checker = checker;
 		this.block = block;
 	}
 	
 	@Override
 	public boolean generate(Level level, Random random, int x, int y, int z) {
-		if (!block.canPlaceAt(level, x, y, z) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSapling)) {
+		if (!checker.canSpawn(level, x, y, z) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSapling)) {
 			return false;
 		}
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());

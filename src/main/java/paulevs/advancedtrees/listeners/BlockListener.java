@@ -24,6 +24,7 @@ public class BlockListener {
 	public static ATStaticLogBlock oakLogStatic;
 	public static ATDynamicBlock oakLogDynamic;
 	public static ATLeavesBlock oakLeaves;
+	public static ATSpawnerSapling oakSapling;
 	
 	@EventListener
 	public void registerBlocks(BlockRegistryEvent event) {
@@ -32,29 +33,8 @@ public class BlockListener {
 		oakLogStatic = registerLogStatic(registry, AdvancedTrees.makeID("oak_log_static"), 1, 7);
 		oakLogDynamic = registerLogDynamic(registry, AdvancedTrees.makeID("oak_log_dynamic"), 1, () -> TreeBehaviours.OAK_TREE_BEHAVIOUR);
 		oakLeaves = registerLeaves(registry, AdvancedTrees.makeID("oak_leaves"));
-		registerSampling(registry, AdvancedTrees.makeID("oak_sapling"), () -> TreeStructures.OAK_TREE);
+		oakSapling = registerSampling(registry, AdvancedTrees.makeID("oak_sapling"), () -> TreeStructures.OAK_TREE);
 	}
-	
-	// TODO remove
-	// For debug only!
-	/*@EventListener
-	public void registerColor(BlockColoursRegisterEvent event) {
-		int[] rgb = new int[] {
-			Color.RED.getRGB(),
-			Color.GREEN.getRGB(),
-			Color.BLUE.getRGB(),
-			Color.MAGENTA.getRGB(),
-			Color.BLACK.getRGB()
-		};
-		
-		BlockColours colors = event.getBlockColours();
-		BlockColourProvider provider = (state, world, pos, index) -> {
-			TreeContext context = TreeContext.getInstance();
-			context.update(world, pos.x, pos.y, pos.z);
-			return rgb[context.getGeneration()];
-		};
-		colors.registerColourProvider(provider, oakLog);
-	}*/
 	
 	private ATDynamicBlock registerLogDynamic(BlockRegistry registry, Identifier id, int minAge, Supplier<TreeBehaviour> behaviourSupplier) {
 		ATDynamicBlock log = new ATDynamicBlock(id, minAge, behaviourSupplier);
@@ -78,9 +58,10 @@ public class BlockListener {
 		return log;
 	}
 	
-	private void registerSampling(BlockRegistry registry, Identifier id, Supplier<AdvancedTreeStructure> structureSupplier) {
+	private ATSpawnerSapling registerSampling(BlockRegistry registry, Identifier id, Supplier<AdvancedTreeStructure> structureSupplier) {
 		ATSpawnerSapling sapling = new ATSpawnerSapling(id, structureSupplier);
 		registry.register(id, sapling);
 		modBlocks.add(sapling);
+		return sapling;
 	}
 }

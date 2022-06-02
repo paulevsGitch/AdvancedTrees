@@ -92,10 +92,16 @@ public final class TreeContext {
 		return level;
 	}
 	
+	public boolean isValid() {
+		return block.contains(ATBlockProperties.DIRECTION);
+	}
+	
 	public void update(Level level, int x, int y, int z) {
 		this.level = level;
 		
 		block = BlocksUtil.getBlockState(level, x, y, z);
+		if (!isValid()) return;
+		
 		blockPos.set(x, y, z);
 		treePos.set(x, y, z);
 		

@@ -31,7 +31,9 @@ public class ATDynamicBlock extends ATLoglikeBlock {
 	public void onScheduledTick(Level level, int x, int y, int z, Random random) {
 		TreeContext treeContext = TreeContext.getInstance();
 		treeContext.update(level, x, y, z);
-		behaviourSupplier.get().grow(treeContext);
+		if (treeContext.isValid()) {
+			behaviourSupplier.get().grow(treeContext);
+		}
 	}
 	
 	@Override

@@ -1,0 +1,15 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "paulevs.advancedtrees.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"RainforestMixin",
+		"ForestMixin",
+		"BiomeMixin"
+	],
+	"client": [],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
