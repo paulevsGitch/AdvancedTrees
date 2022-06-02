@@ -23,6 +23,9 @@
 		"stationapi:event_bus": [
 			"paulevs.advancedtrees.listeners.BlockListener",
 			"paulevs.advancedtrees.listeners.CreativeListener"
+		],
+		"stationapi:event_bus_client": [
+			"paulevs.advancedtrees.listeners.ColorListener"
 		]
 	},
 	"mixins": [],

@@ -43,7 +43,7 @@ public class ATStaticLogBlock extends ATLoglikeBlock {
 	
 	@Override
 	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
-		builder.add(ATBlockProperties.DIRECTION);
+		super.appendProperties(builder);
 		age = ATBlockProperties.getAge(initMinAge, initMaxAge);
 		builder.add(age);
 	}

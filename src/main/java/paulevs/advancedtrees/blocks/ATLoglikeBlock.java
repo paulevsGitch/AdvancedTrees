@@ -19,7 +19,7 @@ import paulevs.bhcore.util.BlocksUtil;
 import java.util.ArrayList;
 
 public class ATLoglikeBlock extends ATTemplateNotFullBlock {
-	private static final Box BOUNDING_BOX = Box.create(0, 0, 0, 0, 0, 0);
+	protected static final Box BOUNDING_BOX = Box.create(0, 0, 0, 0, 0, 0);
 	
 	public ATLoglikeBlock(Identifier identifier, Material material) {
 		super(identifier, material);
