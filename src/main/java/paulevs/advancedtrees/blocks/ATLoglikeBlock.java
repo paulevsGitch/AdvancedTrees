@@ -13,9 +13,10 @@ import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 import net.modificationstation.stationapi.api.util.math.Direction.AxisDirection;
-import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
+
+import java.util.ArrayList;
 
 public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	private static final Box BOUNDING_BOX = Box.create(0, 0, 0, 0, 0, 0);
@@ -37,7 +38,7 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		BlocksUtil.setBlockState(level, x, y, z, state);
 	}
 	
-	@Override
+	/*@Override
 	public Box getCollisionShape(Level level, int x, int y, int z) {
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
 		if (state.getBlock() != this) return super.getCollisionShape(level, x, y, z);
@@ -45,12 +46,18 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		int age = getAge(state);
 		updateBox(age, dir);
 		return BOUNDING_BOX.method_102(x, y, z);
-	}
+	}*/
 	
 	@Override
 	@Environment(EnvType.CLIENT)
 	public Box getOutlineShape(Level level, int x, int y, int z) {
-		return getCollisionShape(level, x, y, z);
+		//return getCollisionShape(level, x, y, z);
+		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
+		if (state.getBlock() != this) return super.getCollisionShape(level, x, y, z);
+		Direction dir = state.get(ATBlockProperties.DIRECTION);
+		int age = getAge(state);
+		updateBox(age, dir);
+		return BOUNDING_BOX.method_102(x, y, z);
 	}
 	
 	@Override
@@ -67,6 +74,12 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 			(float) BOUNDING_BOX.maxY,
 			(float) BOUNDING_BOX.maxZ
 		);
+	}
+	
+	@Override
+	public void doesBoxCollide(Level level, int x, int y, int z, Box box, ArrayList list) {
+		updateBoundingBox(level, x, y, z);
+		super.doesBoxCollide(level, x, y, z, box, list);
 	}
 	
 	@Override

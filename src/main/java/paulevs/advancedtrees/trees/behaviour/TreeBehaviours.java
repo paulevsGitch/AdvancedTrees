@@ -1,16 +1,12 @@
-package paulevs.advancedtrees.trees;
+package paulevs.advancedtrees.trees.behaviour;
 
-import net.modificationstation.stationapi.api.block.BlockState;
-import net.modificationstation.stationapi.api.util.math.Direction;
-import net.modificationstation.stationapi.api.util.math.MathHelper;
-import paulevs.advancedtrees.blocks.ATBlockProperties;
-import paulevs.advancedtrees.blocks.ATStaticLogBlock;
-import paulevs.bhcore.storage.vector.Vec3I;
-import paulevs.bhcore.util.BlocksUtil;
-import paulevs.bhcore.util.ClientUtil;
+import paulevs.advancedtrees.listeners.BlockListener;
 
 public class TreeBehaviours {
-	public static final TreeBehaviour SIMPLE_TREE = (level, context) -> {
+	public static final TreeBehaviour OAK_TREE_BEHAVIOUR = new SimpleTreeBehaviour(8, BlockListener.oakLogStatic);
+	
+	/*public static final TreeBehaviour SIMPLE_TREE = (context) -> {
+		Level level = context.getLevel();
 		Vec3I treePos = context.getTreePos();
 		Vec3I blockPos = context.getBlockPos();
 		Vec3I pos = blockPos.clone();
@@ -80,5 +76,5 @@ public class TreeBehaviours {
 		//if (needUpdate) {
 			TreeUtil.increaseAge(level, blockPos, 16);
 		//}
-	};
+	};*/
 }

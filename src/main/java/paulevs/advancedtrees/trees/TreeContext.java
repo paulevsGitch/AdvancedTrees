@@ -1,7 +1,5 @@
 package paulevs.advancedtrees.trees;
 
-import net.minecraft.block.BlockBase;
-import net.minecraft.level.BlockView;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
@@ -22,6 +20,7 @@ public final class TreeContext {
 	private int generation;
 	private BlockState block;
 	private ATStaticLogBlock staticLogBlock;
+	private Level level;
 	
 	private TreeContext() {}
 	
@@ -86,15 +85,16 @@ public final class TreeContext {
 	}
 	
 	/**
-	 * Get static block for this tree.
-	 * @return
+	 * Get current level
+	 * @return {@link Level}
 	 */
-	public ATStaticLogBlock getStaticLogBlock() {
-		return staticLogBlock;
+	public Level getLevel() {
+		return level;
 	}
 	
-	public void update(BlockView level, int x, int y, int z, ATStaticLogBlock staticLogBlock) {
-		this.staticLogBlock = staticLogBlock;
+	public void update(Level level, int x, int y, int z) {
+		this.level = level;
+		
 		block = BlocksUtil.getBlockState(level, x, y, z);
 		blockPos.set(x, y, z);
 		treePos.set(x, y, z);

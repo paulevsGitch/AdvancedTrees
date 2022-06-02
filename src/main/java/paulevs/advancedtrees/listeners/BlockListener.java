@@ -2,36 +2,35 @@ package paulevs.advancedtrees.listeners;
 
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.block.BlockBase;
-import net.modificationstation.stationapi.api.client.colour.block.BlockColourProvider;
-import net.modificationstation.stationapi.api.client.colour.block.BlockColours;
-import net.modificationstation.stationapi.api.client.event.colour.block.BlockColoursRegisterEvent;
 import net.modificationstation.stationapi.api.event.registry.BlockRegistryEvent;
 import net.modificationstation.stationapi.api.registry.BlockRegistry;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import paulevs.advancedtrees.AdvancedTrees;
 import paulevs.advancedtrees.blocks.ATDynamicBlock;
-import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSapling;
-import paulevs.advancedtrees.trees.TreeBehaviour;
-import paulevs.advancedtrees.trees.TreeBehaviours;
-import paulevs.advancedtrees.trees.TreeContext;
-import paulevs.advancedtrees.trees.TreeUtil;
+import paulevs.advancedtrees.blocks.ATStaticLogBlock;
+import paulevs.advancedtrees.trees.behaviour.TreeBehaviours;
+import paulevs.advancedtrees.trees.structure.AdvancedTreeStructure;
+import paulevs.advancedtrees.trees.structure.TreeStructures;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BlockListener {
 	public static List<BlockBase> modBlocks = new ArrayList<>();
-	public static ATStaticLogBlock oakLog;
+	public static ATStaticLogBlock oakLogStatic;
+	public static ATDynamicBlock oakLogDynamic;
 	
 	@EventListener
 	public void registerBlocks(BlockRegistryEvent event) {
 		BlockRegistry registry = event.registry;
 		
-		oakLog = registerLogStatic(registry, AdvancedTrees.makeID("oak_log_static"), 1, 7);
-		ATDynamicBlock dLog = registerLogDynamic(registry, AdvancedTrees.makeID("oak_log_dynamic"), 1, TreeBehaviours.SIMPLE_TREE, oakLog);
-		registerSampling(registry, AdvancedTrees.makeID("oak_sapling"), dLog);
+		oakLogStatic = registerLogStatic(registry, AdvancedTrees.makeID("oak_log_static"), 1, 7);
+		oakLogDynamic = registerLogDynamic(registry, AdvancedTrees.makeID("oak_log_dynamic"), 1);
+		
+		oakLogDynamic.linkBehaviour(TreeBehaviours.OAK_TREE_BEHAVIOUR);
+		
+		registerSampling(registry, AdvancedTrees.makeID("oak_sapling"), TreeStructures.OAK_TREE);
 	}
 	
 	// TODO remove
@@ -55,10 +54,10 @@ public class BlockListener {
 		colors.registerColourProvider(provider, oakLog);
 	}*/
 	
-	private ATDynamicBlock registerLogDynamic(BlockRegistry registry, Identifier id, int minAge, TreeBehaviour behaviour, ATStaticLogBlock staticLogBlock) {
-		ATDynamicBlock log = new ATDynamicBlock(id, minAge, behaviour, staticLogBlock);
+	private ATDynamicBlock registerLogDynamic(BlockRegistry registry, Identifier id, int minAge) {
+		ATDynamicBlock log = new ATDynamicBlock(id, minAge);
 		registry.register(id, log);
-		//modBlocks.add(log);
+		modBlocks.add(log);
 		return log;
 	}
 	
@@ -70,9 +69,9 @@ public class BlockListener {
 		return log;
 	}
 	
-	private void registerSampling(BlockRegistry registry, Identifier id, ATDynamicBlock log) {
-		ATSpawnerSapling sapling = new ATSpawnerSapling(id, log);
+	private void registerSampling(BlockRegistry registry, Identifier id, AdvancedTreeStructure structure) {
+		ATSpawnerSapling sapling = new ATSpawnerSapling(id, structure);
 		registry.register(id, sapling);
-		//modBlocks.add(sapling);
+		modBlocks.add(sapling);
 	}
 }
