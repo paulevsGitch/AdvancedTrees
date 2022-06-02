@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SimpleTreeBehaviour implements TreeBehaviour {
-	private static final Direction[] DIRECTIONS = Direction.values();
 	private final ATStaticLogBlock logStatic;
 	private final ATLeavesBlock leaves;
 	private final int maxAge;
@@ -114,7 +113,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		Vec3I pos = new Vec3I();
 		Vec3I pos2 = new Vec3I();
 		List<Vec3I> positions = new ArrayList<>();
-		for (Direction dir: DIRECTIONS) {
+		for (Direction dir: MathUtil.DIRECTIONS) {
 			pos.set(blockPos).move(dir);
 			BlockState state = BlocksUtil.getBlockState(level, pos);
 			if (state.getBlock() == leaves && state.get(ATBlockProperties.DIRECTION).getOpposite() == dir) {
@@ -129,7 +128,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 	
 	private void removeOldLeaves(Level level, Vec3I blockPos, Vec3I pos, List<Vec3I> positions) {
 		positions.add(blockPos.clone());
-		for (Direction dir: DIRECTIONS) {
+		for (Direction dir: MathUtil.DIRECTIONS) {
 			pos.set(blockPos).move(dir);
 			BlockState state = BlocksUtil.getBlockState(level, pos);
 			if (state.getBlock() == leaves && state.get(ATBlockProperties.DIRECTION).getOpposite() == dir) {

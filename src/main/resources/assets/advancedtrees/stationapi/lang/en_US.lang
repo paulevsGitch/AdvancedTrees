@@ -1,5 +1,4 @@
 tab.at_tab.name=Advanced Trees
-block.oak_sapling.name=Oak Sapling
-block.oak_spawner_sapling.name=Oak Spawner Sapling
-item.oak_sapling.name=Oak Sapling
-item.oak_spawner_sapling.name=Oak Spawner Sapling
+tile.oak_sapling.name=Oak Sapling
+tile.oak_spawner_sapling.name=Oak Spawner Sapling
+tile.cactus_spawner_sapling.name=Cactus Spawner Sapling

@@ -8,6 +8,9 @@ import paulevs.advancedtrees.blocks.ATLeavesBlock;
 import paulevs.advancedtrees.blocks.ATSaplingBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSaplingBlock;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
+import paulevs.advancedtrees.blocks.CactusDynamicLogBlock;
+import paulevs.advancedtrees.blocks.CactusSpawnerSaplingBlock;
+import paulevs.advancedtrees.blocks.CactusStaticLogBlock;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ public class TreeInfo {
 		this.id = id;
 		
 		List<ItemConvertible> items = new ArrayList<>();
-		items.add(sapling);
+		if (sapling != null) items.add(sapling);
 		items.add(spawnerSapling);
 		availableItems = ImmutableList.copyOf(items);
 	}
@@ -81,5 +84,25 @@ public class TreeInfo {
 		Supplier<AdvancedTreeStructure> structure = () -> tree;
 		ATSpawnerSaplingBlock spawnerSapling = new ATSpawnerSaplingBlock(Identifier.of(id.modID, id.id + "_spawner_sapling"), structure);
 		return new TreeInfo(id, logStatic, logDynamic, leaves, sapling, spawnerSapling, structure);
+	}
+	
+	public static TreeInfo makeLeaflessTree(Identifier id, int minAge, int maxAge, Supplier<TreeBehaviour> behaviour) {
+		ATStaticLogBlock.setAgeLimits(minAge, maxAge);
+		ATStaticLogBlock logStatic = new ATStaticLogBlock(Identifier.of(id.modID, id.id + "_log_static"));
+		ATDynamicLogBlock logDynamic = new ATDynamicLogBlock(Identifier.of(id.modID, id.id + "_log_dynamic"), minAge, behaviour);
+		AdvancedTreeStructure tree = new AdvancedTreeStructure(logDynamic, logDynamic::canPlaceAt);
+		Supplier<AdvancedTreeStructure> structure = () -> tree;
+		ATSpawnerSaplingBlock spawnerSapling = new ATSpawnerSaplingBlock(Identifier.of(id.modID, id.id + "_spawner_sapling"), structure);
+		return new TreeInfo(id, logStatic, logDynamic, null, null, spawnerSapling, structure);
+	}
+	
+	public static TreeInfo makeCactusTree(Identifier id, int minAge, int maxAge, Supplier<TreeBehaviour> behaviour) {
+		ATStaticLogBlock.setAgeLimits(minAge, maxAge);
+		ATStaticLogBlock logStatic = new CactusStaticLogBlock(Identifier.of(id.modID, id.id + "_log_static"));
+		ATDynamicLogBlock logDynamic = new CactusDynamicLogBlock(Identifier.of(id.modID, id.id + "_log_dynamic"), minAge, behaviour);
+		ATSpawnerSaplingBlock[] sapling = new ATSpawnerSaplingBlock[1];
+		Supplier<AdvancedTreeStructure> structure = () -> new AdvancedTreeStructure(logDynamic, sapling[0]::canPlaceAt);
+		sapling[0] = new CactusSpawnerSaplingBlock(Identifier.of(id.modID, id.id + "_spawner_sapling"), structure);
+		return new TreeInfo(id, logStatic, logDynamic, null, null, sapling[0], structure);
 	}
 }

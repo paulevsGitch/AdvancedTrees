@@ -7,6 +7,7 @@ import net.modificationstation.stationapi.api.client.colour.block.BlockColours;
 import net.modificationstation.stationapi.api.client.colour.item.ItemColours;
 import net.modificationstation.stationapi.api.client.event.colour.block.BlockColoursRegisterEvent;
 import net.modificationstation.stationapi.api.client.event.colour.item.ItemColoursRegisterEvent;
+import net.modificationstation.stationapi.api.client.render.RenderLayer;
 import paulevs.advancedtrees.trees.TreeClientUtil;
 import paulevs.advancedtrees.trees.VanillaTrees;
 
@@ -16,6 +17,7 @@ public class ColorListener {
 	public void registerBlockColors(BlockColoursRegisterEvent event) {
 		BlockColours colors = event.getBlockColours();
 		colors.registerColourProvider(TreeClientUtil.getBiomeColorBlock(), VanillaTrees.OAK.getLeaves());
+		RenderLayer.getBlockLayers();
 	}
 	
 	@EventListener

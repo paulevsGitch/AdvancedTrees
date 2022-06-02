@@ -7,6 +7,7 @@ import net.modificationstation.stationapi.api.template.block.TemplateBlockBase;
 public class ATTemplateNotFullBlock extends TemplateBlockBase {
 	public ATTemplateNotFullBlock(Identifier identifier, Material material) {
 		super(identifier, material);
+		setTranslationKey(identifier.modID, identifier.id);
 	}
 	
 	@Override
