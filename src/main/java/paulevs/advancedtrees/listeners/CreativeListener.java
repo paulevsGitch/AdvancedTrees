@@ -20,6 +20,7 @@ public class CreativeListener {
 		tab = new SimpleTab(AdvancedTrees.makeID("at_tab"), (ItemConvertible) BlockBase.LOG);
 		event.register(tab);
 		addItems(VanillaTrees.OAK.getAvailableItems());
+		addItems(VanillaTrees.SPRUCE.getAvailableItems());
 		addItems(VanillaTrees.CACTUS.getAvailableItems());
 	}
 	

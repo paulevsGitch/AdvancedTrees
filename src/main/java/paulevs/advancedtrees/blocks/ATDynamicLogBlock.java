@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
+import paulevs.advancedtrees.tileentities.TreeTileEntity;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 import paulevs.bhcore.util.ToolsUtil;
@@ -39,5 +40,11 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 	@Override
 	public int getAge(BlockState state) {
 		return age;
+	}
+	
+	public void createEntity(Level level, int x, int y, int z) {
+		int age = behaviourSupplier.get().getAge(level.rand);
+		TreeTileEntity treeTileEntity = new TreeTileEntity(age);
+		level.setTileEntity(x, y, z, treeTileEntity);
 	}
 }

@@ -4,6 +4,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerBase;
 import net.minecraft.level.BlockView;
 import net.minecraft.level.Level;
 import net.minecraft.util.maths.Box;
@@ -13,10 +14,12 @@ import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 import net.modificationstation.stationapi.api.util.math.Direction.AxisDirection;
+import paulevs.advancedtrees.trees.TreeUtil;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	protected static final Box BOUNDING_BOX = Box.create(0, 0, 0, 0, 0, 0);
@@ -76,11 +79,32 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
 		Vec3I pos = new Vec3I(x, y, z).move(state.get(ATBlockProperties.DIRECTION));
 		state = BlocksUtil.getBlockState(level, pos);
-		if (state.getBlock() instanceof ATLoglikeBlock || state.getBlock() == GRASS || state.getBlock() == DIRT) {
+		if (isSupport(state)) {
 			return;
 		}
+		List<Vec3I> connectedBlocks = TreeUtil.getConnectedBlocks(level, pos.set(x, y, z));
+		
+		for (int i = connectedBlocks.size() - 1; i >= 0; i--) {
+			pos = connectedBlocks.get(i);
+			BlockBase block = BlocksUtil.getBlockState(level, pos).getBlock();
+			block.drop(level, pos.x, pos.y, pos.z, level.getTileMeta(pos.x, pos.y, pos.z));
+			level.setTile(x, y, z, 0);
+		}
+		
+		level.removeTileEntity(x, y, z);
 		this.drop(level, x, y, z, level.getTileMeta(x, y, z));
 		level.setTile(x, y, z, 0);
+	}
+	
+	@Override
+	public void onBlockRemoved(Level level, int x, int y, int z) {
+		level.removeTileEntity(x, y, z);
+	}
+	
+	@Override
+	public boolean canUse(Level level, int x, int y, int z, PlayerBase player) {
+		System.out.println(level.getTileEntity(x, y, z));
+		return false;
 	}
 	
 	public int getAge(BlockState state) {
@@ -106,5 +130,9 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 			if (negative) BOUNDING_BOX.minZ -= distance;
 			else BOUNDING_BOX.maxZ += distance;
 		}
+	}
+	
+	protected boolean isSupport(BlockState state) {
+		return state.getBlock() instanceof ATLoglikeBlock || state.getBlock() == GRASS || state.getBlock() == DIRT || state.getBlock() == FARMLAND;
 	}
 }

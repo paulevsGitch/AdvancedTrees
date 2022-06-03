@@ -1,4 +1,4 @@
-package paulevs.advancedtrees.trees.behaviour;
+package paulevs.advancedtrees.trees.behaviour.simple;
 
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -8,9 +8,13 @@ import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
+import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
+import paulevs.bhcore.util.MathUtil;
+
+import java.util.Random;
 
 public class SimpleCactusBehaviour implements TreeBehaviour {
 	private final ATStaticLogBlock logStatic;
@@ -48,6 +52,11 @@ public class SimpleCactusBehaviour implements TreeBehaviour {
 		}
 		
 		TreeUtil.increaseAge(level, blockPos, maxAge);
+	}
+	
+	@Override
+	public int getAge(Random random) {
+		return MathUtil.randomRange(maxAge *2 / 3, maxAge, random);
 	}
 	
 	private void growTrunk(Level level, Vec3I treePos, Vec3I blockPos, Vec3I pos, int dist, BlockState state) {

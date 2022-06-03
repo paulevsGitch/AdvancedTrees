@@ -30,6 +30,7 @@ public class AdvancedTreeStructure extends Structure {
 			return false;
 		}
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());
+		block.createEntity(level, x, y, z);
 		
 		List<Set<Vec3I>> buffers = new ArrayList<>();
 		buffers.add(new HashSet<>());

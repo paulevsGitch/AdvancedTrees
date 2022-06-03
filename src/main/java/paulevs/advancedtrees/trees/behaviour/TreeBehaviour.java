@@ -2,7 +2,9 @@ package paulevs.advancedtrees.trees.behaviour;
 
 import paulevs.advancedtrees.trees.TreeContext;
 
-@FunctionalInterface
+import java.util.Random;
+
 public interface TreeBehaviour {
 	void grow(TreeContext context);
+	int getAge(Random random);
 }

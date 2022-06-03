@@ -21,6 +21,7 @@ public final class TreeContext {
 	private BlockState block;
 	private ATStaticLogBlock staticLogBlock;
 	private Level level;
+	private int maxAge;
 	
 	private TreeContext() {}
 	
@@ -92,8 +93,18 @@ public final class TreeContext {
 		return level;
 	}
 	
+	/**
+	 * Check if block is valid to prevent errors.
+	 */
 	public boolean isValid() {
 		return block.contains(ATBlockProperties.DIRECTION);
+	}
+	
+	/**
+	 * Get tree maximum age (if possible), otherwise return -1.
+	 */
+	public int getMaxAge() {
+		return maxAge;
 	}
 	
 	public void update(Level level, int x, int y, int z) {
@@ -108,6 +119,7 @@ public final class TreeContext {
 		distanceToOrigin = -1;
 		distanceToSplit = -1;
 		generation = 0;
+		maxAge = -1;
 		
 		BlockState state = block;
 		Direction dir = block.get(ATBlockProperties.DIRECTION);
@@ -136,6 +148,8 @@ public final class TreeContext {
 		if (!validState(state)) {
 			treePos.move(dir.getOpposite());
 		}
+		
+		level.getTileEntity(treePos.x, treePos.y, treePos.z);
 	}
 	
 	private boolean validState(BlockState state) {

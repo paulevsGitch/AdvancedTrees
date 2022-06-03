@@ -9,7 +9,8 @@ import java.io.IOException;
 public class DataGenerator {
 	public static void main(String[] args) {
 		//generateTreeModels("oak", 1, 7);
-		generateTreeModels("cactus", 2, 4);
+		//generateTreeModels("spruce", 1, 7);
+		//generateTreeModels("cactus", 2, 4);
 	}
 	
 	private static void generateTreeModels(String name, int minAge, int maxAge) {

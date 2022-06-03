@@ -7,6 +7,8 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import paulevs.bhcore.util.BlocksUtil;
 
+import java.util.Random;
+
 public class ATSaplingBlock extends ATTemplateNotFullBlock {
 	private final ATDynamicLogBlock log;
 	private final ATLeavesBlock leaves;
@@ -38,5 +40,23 @@ public class ATSaplingBlock extends ATTemplateNotFullBlock {
 			this.drop(level, x, y, z, level.getTileMeta(x, y, z));
 			level.setTile(x, y, z, 0);
 		}
+	}
+	
+	@Override
+	public void onScheduledTick(Level level, int x, int y, int z, Random random) {
+		if (!canPlaceAt(level, x, y, z)) {
+			this.drop(level, x, y, z, level.getTileMeta(x, y, z));
+			level.setTile(x, y, z, 0);
+		}
+		else if (canGrowTree(level, x, y, z)) {
+			BlocksUtil.setBlockState(level, x, y, z, log.getDefaultState());
+			BlocksUtil.setBlockState(level, x, y + 1, z, leaves.getDefaultState().with(ATBlockProperties.CONNECTED, true));
+			log.createEntity(level, x, y, z);
+		}
+	}
+	
+	protected boolean canGrowTree(Level level, int x, int y, int z) {
+		BlockState state = BlocksUtil.getBlockState(level, x, y + 1, z);
+		return state.getMaterial().isReplaceable();
 	}
 }

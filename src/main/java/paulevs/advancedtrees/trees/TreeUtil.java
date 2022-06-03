@@ -9,11 +9,15 @@ import net.modificationstation.stationapi.api.util.math.Direction;
 import org.jetbrains.annotations.Nullable;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLeavesBlock;
+import paulevs.advancedtrees.blocks.ATLoglikeBlock;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
+import paulevs.bhcore.util.MathUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class TreeUtil {
@@ -125,6 +129,25 @@ public class TreeUtil {
 			Direction d = directions[i];
 			directions[i] = directions[i2];
 			directions[i2] = d;
+		}
+	}
+	
+	public static List<Vec3I> getConnectedBlocks(Level level, Vec3I start) {
+		List<Vec3I> positions = new ArrayList<>();
+		getConnectedBlocks(level, start, new Vec3I(), positions);
+		return positions;
+	}
+	
+	private static void getConnectedBlocks(Level level, Vec3I center, Vec3I pos, List<Vec3I> positions) {
+		for (Direction dir: MathUtil.DIRECTIONS) {
+			BlockState state = BlocksUtil.getBlockState(level, pos.set(center).move(dir));
+			if (state.getBlock() instanceof ATLeavesBlock || state.getBlock() instanceof ATLoglikeBlock) {
+				if (state.get(ATBlockProperties.DIRECTION).getOpposite() == dir) {
+					Vec3I newCenter = pos.clone();
+					positions.add(newCenter);
+					getConnectedBlocks(level, newCenter, pos, positions);
+				}
+			}
 		}
 	}
 }

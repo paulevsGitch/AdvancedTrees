@@ -3,6 +3,7 @@ package paulevs.advancedtrees.blocks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.material.Material;
+import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
 
 public class CactusStaticLogBlock extends ATStaticLogBlock {
@@ -18,5 +19,10 @@ public class CactusStaticLogBlock extends ATStaticLogBlock {
 	@Environment(value= EnvType.CLIENT)
 	public int getRenderPass() {
 		return 1;
+	}
+	
+	@Override
+	protected boolean isSupport(BlockState state) {
+		return state.getBlock() instanceof ATLoglikeBlock || state.getBlock() == SAND;
 	}
 }
