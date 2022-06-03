@@ -1,0 +1,7 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "minecraft:block/spruce_sapling",
+		"layer1": "advancedtrees:block/letter_s"
+	}
+}

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"direction=down": { "model": "advancedtrees:block/spruce_log_1" },
+		"direction=up": { "model": "advancedtrees:block/spruce_log_1", "x": 180 },
+		"direction=east": { "model": "advancedtrees:block/spruce_log_1", "x": 90, "y": 180 },
+		"direction=west": { "model": "advancedtrees:block/spruce_log_1", "x": 90 },
+		"direction=north": { "model": "advancedtrees:block/spruce_log_1", "x": 90, "y": 90 },
+		"direction=south": { "model": "advancedtrees:block/spruce_log_1", "x": 90, "y": 270 }
+	}
+}
