@@ -34,6 +34,7 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 		treeContext.update(level, x, y, z);
 		if (treeContext.isValid()) {
 			behaviourSupplier.get().grow(treeContext);
+			treeContext.restoreEntity();
 		}
 	}
 	

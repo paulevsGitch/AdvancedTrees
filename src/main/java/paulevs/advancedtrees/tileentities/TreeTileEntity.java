@@ -28,4 +28,14 @@ public class TreeTileEntity extends TileEntityBase implements IndependentTileEnt
 		super.writeIdentifyingData(arg);
 		arg.put("maxAge", (short) maxAge);
 	}
+	
+	@Override
+	public void invalidate() {
+		validate();
+	}
+	
+	@Override
+	public boolean isInvalid() {
+		return false;
+	}
 }

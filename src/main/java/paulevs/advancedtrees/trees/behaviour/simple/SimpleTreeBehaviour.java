@@ -33,21 +33,22 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 	@Override
 	public void grow(TreeContext context) {
 		Level level = context.getLevel();
-		Vec3I treePos = context.getTreePos();
 		Vec3I blockPos = context.getBlockPos();
+		Direction dir = context.getBlock().get(ATBlockProperties.DIRECTION);
+		BlockState log = logStatic.getDefaultState().with(ATBlockProperties.DIRECTION, dir);
+		BlocksUtil.setBlockState(level, blockPos, log);
+		
+		int dist = context.getDistanceToOrigin();
+		if (dist > maxAge) return;
+		int maxStoredAge = context.getMaxAge();
+		if (dist > maxStoredAge) return;
+		
+		
+		Vec3I treePos = context.getTreePos();
 		Vec3I pos = blockPos.clone();
 		int gen = context.getGeneration();
 		
 		BlockState state = context.getBlock();
-		Direction dir = context.getBlock().get(ATBlockProperties.DIRECTION);
-		BlockState log = logStatic.getDefaultState().with(ATBlockProperties.DIRECTION, dir);
-		BlocksUtil.setBlockState(level, pos, log);
-		
-		int dist = context.getDistanceToOrigin();
-		// If too large
-		if (dist > maxAge) {
-			return;
-		}
 		
 		if (gen == 0) {
 			growTrunk(level, treePos, blockPos, pos, dist, state);
@@ -61,7 +62,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 	
 	@Override
 	public int getAge(Random random) {
-		return MathUtil.randomRange(maxAge *2 / 3, maxAge, random);
+		return MathUtil.randomRange(maxAge * 2 / 3, maxAge, random);
 	}
 	
 	protected void growTrunk(Level level, Vec3I treePos, Vec3I blockPos, Vec3I pos, int dist, BlockState state) {

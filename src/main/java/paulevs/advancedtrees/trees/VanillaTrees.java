@@ -1,10 +1,10 @@
 package paulevs.advancedtrees.trees;
 
 import paulevs.advancedtrees.AdvancedTrees;
+import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
+import paulevs.advancedtrees.trees.behaviour.simple.CedarTreeBehaviour;
 import paulevs.advancedtrees.trees.behaviour.simple.SimpleCactusBehaviour;
 import paulevs.advancedtrees.trees.behaviour.simple.SimpleTreeBehaviour;
-import paulevs.advancedtrees.trees.behaviour.simple.CedarTreeBehaviour;
-import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 import paulevs.advancedtrees.trees.structure.TreeInfo;
 
 public class VanillaTrees {

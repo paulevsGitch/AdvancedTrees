@@ -6,7 +6,6 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLoglikeBlock;
-import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.advancedtrees.tileentities.TreeTileEntity;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
@@ -21,7 +20,7 @@ public final class TreeContext {
 	private int distanceToSplit;
 	private int generation;
 	private BlockState block;
-	private ATStaticLogBlock staticLogBlock;
+	private TreeTileEntity entity;
 	private Level level;
 	private int maxAge;
 	
@@ -109,6 +108,13 @@ public final class TreeContext {
 		return maxAge;
 	}
 	
+	
+	public void restoreEntity() {
+		if (entity != null && level.getTileEntity(treePos.x, treePos.y, treePos.z) != entity) {
+			level.setTileEntity(treePos.x, treePos.y, treePos.z, entity);
+		}
+	}
+	
 	public void update(Level level, int x, int y, int z) {
 		this.level = level;
 		
@@ -153,9 +159,11 @@ public final class TreeContext {
 		
 		TileEntityBase entity = level.getTileEntity(treePos.x, treePos.y, treePos.z);
 		if (entity != null && entity instanceof TreeTileEntity) {
-			maxAge = ((TreeTileEntity) entity).getMaxAge();
+			this.entity = (TreeTileEntity) entity;
+			maxAge = this.entity.getMaxAge();
 			if (distanceToOrigin >= maxAge) {
 				level.removeTileEntity(treePos.x, treePos.y, treePos.z);
+				this.entity = null;
 			}
 		}
 	}
