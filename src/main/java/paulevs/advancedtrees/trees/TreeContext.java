@@ -1,11 +1,13 @@
 package paulevs.advancedtrees.trees;
 
 import net.minecraft.level.Level;
+import net.minecraft.tileentity.TileEntityBase;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLoglikeBlock;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
+import paulevs.advancedtrees.tileentities.TreeTileEntity;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
@@ -149,7 +151,13 @@ public final class TreeContext {
 			treePos.move(dir.getOpposite());
 		}
 		
-		level.getTileEntity(treePos.x, treePos.y, treePos.z);
+		TileEntityBase entity = level.getTileEntity(treePos.x, treePos.y, treePos.z);
+		if (entity != null && entity instanceof TreeTileEntity) {
+			maxAge = ((TreeTileEntity) entity).getMaxAge();
+			if (distanceToOrigin >= maxAge) {
+				level.removeTileEntity(treePos.x, treePos.y, treePos.z);
+			}
+		}
 	}
 	
 	private boolean validState(BlockState state) {

@@ -88,7 +88,7 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 			pos = connectedBlocks.get(i);
 			BlockBase block = BlocksUtil.getBlockState(level, pos).getBlock();
 			block.drop(level, pos.x, pos.y, pos.z, level.getTileMeta(pos.x, pos.y, pos.z));
-			level.setTile(x, y, z, 0);
+			level.setTile(pos.x, pos.y, pos.z, 0);
 		}
 		
 		level.removeTileEntity(x, y, z);
@@ -99,12 +99,6 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	@Override
 	public void onBlockRemoved(Level level, int x, int y, int z) {
 		level.removeTileEntity(x, y, z);
-	}
-	
-	@Override
-	public boolean canUse(Level level, int x, int y, int z, PlayerBase player) {
-		System.out.println(level.getTileEntity(x, y, z));
-		return false;
 	}
 	
 	public int getAge(BlockState state) {

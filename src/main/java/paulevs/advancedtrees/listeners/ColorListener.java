@@ -23,5 +23,6 @@ public class ColorListener {
 	public void registerItemColors(ItemColoursRegisterEvent event) {
 		ItemColours colors = event.getItemColours();
 		colors.register(TreeClientUtil.getBiomeColorItem(), VanillaTrees.OAK.getLeaves());
+		colors.register(TreeClientUtil.getSpruceColorItem(), VanillaTrees.SPRUCE.getLeaves());
 	}
 }
