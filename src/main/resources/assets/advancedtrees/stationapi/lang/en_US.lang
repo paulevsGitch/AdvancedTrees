@@ -2,3 +2,6 @@ tab.at_tab.name=Advanced Trees
 tile.oak_sapling.name=Oak Sapling
 tile.oak_spawner_sapling.name=Oak Spawner Sapling
 tile.cactus_spawner_sapling.name=Cactus Spawner Sapling
+tile.oak_stem.name=Oak Stem
+tile.spruce_stem.name=Spruce Stem
+tile.cactus_stem.name=Cactus Stem

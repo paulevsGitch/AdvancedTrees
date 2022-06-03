@@ -6,17 +6,20 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.EntityBase;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.item.ItemConvertible;
 import net.modificationstation.stationapi.api.registry.Identifier;
 
+import java.util.function.Supplier;
+
 public class CactusStaticLogBlock extends ATStaticLogBlock {
-	public CactusStaticLogBlock(Identifier identifier) {
-		this(identifier, Material.WOOL);
+	public CactusStaticLogBlock(Identifier identifier, Supplier<ItemConvertible> drop) {
+		this(identifier, Material.WOOL, drop);
 		setSounds(WOOL_SOUNDS);
 		setHardness(0.5F);
 	}
 	
-	public CactusStaticLogBlock(Identifier identifier, Material material) {
-		super(identifier, material);
+	public CactusStaticLogBlock(Identifier identifier, Material material, Supplier<ItemConvertible> drop) {
+		super(identifier, material, drop);
 	}
 	
 	@Environment(value= EnvType.CLIENT)

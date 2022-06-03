@@ -1,0 +1,6 @@
+{
+	"parent": "advancedtrees:block/stem",
+	"textures": {
+		"all": "advancedtrees:block/oak_stem"
+	}
+}
