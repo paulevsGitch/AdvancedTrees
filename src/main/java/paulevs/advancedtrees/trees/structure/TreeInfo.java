@@ -78,12 +78,13 @@ public class TreeInfo {
 		ATStaticLogBlock.setAgeLimits(minAge, maxAge);
 		ATStaticLogBlock logStatic = new ATStaticLogBlock(Identifier.of(id.modID, id.id + "_log_static"));
 		ATDynamicLogBlock logDynamic = new ATDynamicLogBlock(Identifier.of(id.modID, id.id + "_log_dynamic"), minAge, behaviour);
-		ATLeavesBlock leaves = new ATLeavesBlock(Identifier.of(id.modID, id.id + "_leaves"));
-		ATSaplingBlock sapling = new ATSaplingBlock(Identifier.of(id.modID, id.id + "_sapling"), logDynamic, leaves);
-		AdvancedTreeStructure tree = new AdvancedTreeStructure(logDynamic, sapling::canPlaceAt);
+		ATSaplingBlock[] sapling = new ATSaplingBlock[1];
+		ATLeavesBlock leaves = new ATLeavesBlock(Identifier.of(id.modID, id.id + "_leaves"), () -> sapling[0], 16);
+		sapling[0] = new ATSaplingBlock(Identifier.of(id.modID, id.id + "_sapling"), logDynamic, leaves);
+		AdvancedTreeStructure tree = new AdvancedTreeStructure(logDynamic, sapling[0]::canPlaceAt);
 		Supplier<AdvancedTreeStructure> structure = () -> tree;
 		ATSpawnerSaplingBlock spawnerSapling = new ATSpawnerSaplingBlock(Identifier.of(id.modID, id.id + "_spawner_sapling"), structure);
-		return new TreeInfo(id, logStatic, logDynamic, leaves, sapling, spawnerSapling, structure);
+		return new TreeInfo(id, logStatic, logDynamic, leaves, sapling[0], spawnerSapling, structure);
 	}
 	
 	public static TreeInfo makeLeaflessTree(Identifier id, int minAge, int maxAge, Supplier<TreeBehaviour> behaviour) {

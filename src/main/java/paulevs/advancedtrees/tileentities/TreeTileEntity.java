@@ -30,11 +30,6 @@ public class TreeTileEntity extends TileEntityBase implements IndependentTileEnt
 	}
 	
 	@Override
-	public void invalidate() {
-		validate();
-	}
-	
-	@Override
 	public boolean isInvalid() {
 		return false;
 	}

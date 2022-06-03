@@ -2,8 +2,11 @@ package paulevs.advancedtrees.blocks;
 
 import net.minecraft.block.BlockBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerBase;
+import net.minecraft.item.ItemInstance;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.item.ItemConvertible;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.template.block.TemplateBlockBase;
@@ -12,16 +15,23 @@ import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ToolsUtil;
 
+import java.util.function.Supplier;
+
 public class ATLeavesBlock extends TemplateBlockBase {
-	public ATLeavesBlock(Identifier identifier) {
-		this(identifier, Material.LEAVES);
+	private final Supplier<ItemConvertible> drop;
+	private final int dropChance;
+	
+	public ATLeavesBlock(Identifier identifier, Supplier<ItemConvertible> drop, int dropChance) {
+		this(identifier, Material.LEAVES, drop, dropChance);
 		setSounds(GRASS_SOUNDS);
 		ToolsUtil.setShears(this, 0);
 	}
 	
-	public ATLeavesBlock(Identifier identifier, Material material) {
+	public ATLeavesBlock(Identifier identifier, Material material, Supplier<ItemConvertible> drop, int dropChance) {
 		super(identifier, material);
 		setDefaultState(getDefaultState().with(ATBlockProperties.DIRECTION, Direction.DOWN).with(ATBlockProperties.CONNECTED, false));
+		this.dropChance = dropChance;
+		this.drop = drop;
 	}
 	
 	@Override
@@ -57,6 +67,24 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	@Override
 	public boolean isFullOpaque() {
 		return false;
+	}
+	
+	@Override
+	public void beforeDestroyedByExplosion(Level level, int x, int y, int z, int meta, float chance) {
+		if (level.rand.nextInt(dropChance) == 0) {
+			drop(level, x, y, z, new ItemInstance(drop.get().asItem()));
+		}
+	}
+	
+	@Override
+	public void afterBreak(Level level, PlayerBase player, int x, int y, int z, int meta) {
+		ItemInstance item = player.getHeldItem();
+		if (item != null && ToolsUtil.isShears(item)) {
+			drop(level, x, y, z, new ItemInstance(this));
+		}
+		else {
+			super.afterBreak(level, player, x, y, z, meta);
+		}
 	}
 	
 	public boolean canConnect(BlockState state) {
