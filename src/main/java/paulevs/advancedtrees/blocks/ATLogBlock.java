@@ -9,6 +9,7 @@ import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.template.block.TemplateBlockBase;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 import paulevs.bhcore.util.BlocksUtil;
+import paulevs.bhcore.util.BurnableUtil;
 import paulevs.bhcore.util.ToolsUtil;
 
 public class ATLogBlock extends TemplateBlockBase {
@@ -16,6 +17,7 @@ public class ATLogBlock extends TemplateBlockBase {
 		this(identifier, Material.WOOD);
 		setSounds(WOOD_SOUNDS);
 		ToolsUtil.setAxe(this, 0);
+		BurnableUtil.registerBurnable(this);
 	}
 	
 	public ATLogBlock(Identifier identifier, Material material) {

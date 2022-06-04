@@ -63,7 +63,9 @@ dependencies {
 	implementation 'org.apache.logging.log4j:log4j-slf4j18-impl:2.17.2'
 
 	modImplementation "net.modificationstation:StationAPI:${project.stapi_version}"
-	modImplementation fileTree(dir: 'libs', include: ['*.jar'])
+	
+	modImplementation "com.github.paulevsGitch:BHCore:${project.bhcore_version}"
+	modImplementation "com.github.paulevsGitch:BHCreative:${project.bhcreative_version}"
 }
 
 processResources {

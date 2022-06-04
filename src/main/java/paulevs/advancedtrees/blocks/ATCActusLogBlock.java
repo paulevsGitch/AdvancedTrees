@@ -7,6 +7,7 @@ import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 public class ATCActusLogBlock extends ATStemBlock {
 	public ATCActusLogBlock(Identifier identifier) {
 		super(identifier);
+		setSounds(WOOL_SOUNDS);
 	}
 	
 	public ATCActusLogBlock(Identifier identifier, Material material) {

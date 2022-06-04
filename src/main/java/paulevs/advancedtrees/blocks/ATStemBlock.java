@@ -12,6 +12,7 @@ import net.modificationstation.stationapi.api.registry.Identifier;
 import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 import paulevs.bhcore.util.BlocksUtil;
+import paulevs.bhcore.util.BurnableUtil;
 import paulevs.bhcore.util.ToolsUtil;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class ATStemBlock extends ATTemplateNotFullBlock {
 		this(identifier, Material.WOOD);
 		setSounds(WOOD_SOUNDS);
 		ToolsUtil.setAxe(this, 0);
+		BurnableUtil.registerBurnable(this);
 	}
 	
 	public ATStemBlock(Identifier identifier, Material material) {
