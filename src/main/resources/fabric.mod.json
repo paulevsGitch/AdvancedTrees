@@ -20,9 +20,11 @@
 
 	"environment": "*",
 	"entrypoints": {
-		"stationapi:event_bus": [
-			"paulevs.advancedtrees.listeners.BlockListener",
+		"bhcreative:event_bus": [
 			"paulevs.advancedtrees.listeners.CreativeListener"
+		],
+		"stationapi:event_bus": [
+			"paulevs.advancedtrees.listeners.BlockListener"
 		],
 		"stationapi:event_bus_client": [
 			"paulevs.advancedtrees.listeners.ColorListener"
