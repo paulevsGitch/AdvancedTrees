@@ -1,0 +1,8 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"ingredients": [{ "item": "advancedtrees:cactus_log" }],
+	"result": {
+		"item": "advancedtrees:cactus_stem",
+		"count": 4
+	}
+}

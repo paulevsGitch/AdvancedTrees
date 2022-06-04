@@ -1,0 +1,7 @@
+{
+	"parent": "advancedtrees:block/log",
+	"textures": {
+		"side": "minecraft:block/birch_log",
+		"top": "advancedtrees:block/birch_log_top"
+	}
+}

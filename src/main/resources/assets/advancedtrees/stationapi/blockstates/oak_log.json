@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"axis=y": { "model": "advancedtrees:block/oak_log" },
+		"axis=z": { "model": "advancedtrees:block/oak_log", "x": 90 },
+		"axis=x": { "model": "advancedtrees:block/oak_log", "x": 90, "y": 90 }
+	}
+}

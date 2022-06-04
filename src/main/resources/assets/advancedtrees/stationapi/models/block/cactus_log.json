@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:block/cactus",
+	"textures": {
+		"top": "#bottom"
+	}
+}
