@@ -14,6 +14,7 @@ import net.modificationstation.stationapi.api.template.block.TemplateBlockBase;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
+import paulevs.bhcore.util.BurnableUtil;
 import paulevs.bhcore.util.ToolsUtil;
 
 public class ATLeavesBlock extends TemplateBlockBase {
@@ -24,12 +25,13 @@ public class ATLeavesBlock extends TemplateBlockBase {
 		this(identifier, Material.LEAVES);
 		setSounds(GRASS_SOUNDS);
 		ToolsUtil.setShears(this, 0);
+		BurnableUtil.registerBurnable(this, 30, 60);
 	}
 	
 	public ATLeavesBlock(Identifier identifier, Material material) {
 		super(identifier, material);
 		setTranslationKey(identifier.modID, identifier.id);
-		setHardness(0.5F);
+		setHardness(0.2F);
 		setDefaultState(getDefaultState()
 			.with(ATBlockProperties.DIRECTION, Direction.DOWN)
 			.with(ATBlockProperties.CONNECTED, false)
