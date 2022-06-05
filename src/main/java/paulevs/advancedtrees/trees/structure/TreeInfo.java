@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.block.BlockBase;
 import net.modificationstation.stationapi.api.item.ItemConvertible;
 import net.modificationstation.stationapi.api.registry.Identifier;
-import paulevs.advancedtrees.blocks.ATCActusLogBlock;
+import paulevs.advancedtrees.blocks.CactusLogBlock;
 import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
 import paulevs.advancedtrees.blocks.ATLeavesBlock;
 import paulevs.advancedtrees.blocks.ATLogBlock;
@@ -50,6 +50,7 @@ public class TreeInfo {
 		items.add(spawnerSapling);
 		items.add(stem);
 		items.add((ItemConvertible) log);
+		if (leaves != null) items.add(leaves);
 		availableItems = ImmutableList.copyOf(items);
 	}
 	
@@ -120,7 +121,7 @@ public class TreeInfo {
 		ATSpawnerSaplingBlock[] sapling = new ATSpawnerSaplingBlock[1];
 		Supplier<AdvancedTreeStructure> structure = () -> new AdvancedTreeStructure(logDynamic, sapling[0]::canPlaceAt);
 		sapling[0] = new CactusSpawnerSaplingBlock(Identifier.of(id.modID, id.id + "_spawner_sapling"), structure);
-		ATCActusLogBlock log = new ATCActusLogBlock(Identifier.of(id.modID, id.id + "_log"));
+		CactusLogBlock log = new CactusLogBlock(Identifier.of(id.modID, id.id + "_log"));
 		return new TreeInfo(id, logStatic, logDynamic, log, stemBlock, null, null, sapling[0], structure);
 	}
 }

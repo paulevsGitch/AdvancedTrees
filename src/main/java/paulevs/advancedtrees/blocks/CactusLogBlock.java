@@ -4,13 +4,13 @@ import net.minecraft.block.material.Material;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import net.modificationstation.stationapi.api.util.math.Direction.Axis;
 
-public class ATCActusLogBlock extends ATStemBlock {
-	public ATCActusLogBlock(Identifier identifier) {
+public class CactusLogBlock extends ATStemBlock {
+	public CactusLogBlock(Identifier identifier) {
 		super(identifier);
 		setSounds(WOOL_SOUNDS);
 	}
 	
-	public ATCActusLogBlock(Identifier identifier, Material material) {
+	public CactusLogBlock(Identifier identifier, Material material) {
 		super(identifier, material);
 	}
 	

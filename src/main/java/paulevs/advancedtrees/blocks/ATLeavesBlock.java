@@ -2,6 +2,7 @@ package paulevs.advancedtrees.blocks;
 
 import net.minecraft.block.BlockBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Living;
 import net.minecraft.entity.player.PlayerBase;
 import net.minecraft.item.ItemInstance;
 import net.minecraft.level.Level;
@@ -29,7 +30,11 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	
 	public ATLeavesBlock(Identifier identifier, Material material, Supplier<ItemConvertible> drop, int dropChance) {
 		super(identifier, material);
-		setDefaultState(getDefaultState().with(ATBlockProperties.DIRECTION, Direction.DOWN).with(ATBlockProperties.CONNECTED, false));
+		setDefaultState(getDefaultState()
+			.with(ATBlockProperties.DIRECTION, Direction.DOWN)
+			.with(ATBlockProperties.CONNECTED, false)
+			.with(ATBlockProperties.PERSISTENT, false)
+		);
 		this.dropChance = dropChance;
 		this.drop = drop;
 	}
@@ -43,15 +48,25 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	}
 	
 	@Override
+	public void afterPlaced(Level level, int x, int y, int z, Living entity) {
+		if (entity instanceof PlayerBase) {
+			BlockState state = BlocksUtil.getBlockState(level, x, y, z);
+			BlocksUtil.setBlockState(level, x, y, z, state.with(ATBlockProperties.PERSISTENT, true));
+		}
+	}
+	
+	@Override
 	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
 		super.appendProperties(builder);
 		builder.add(ATBlockProperties.DIRECTION);
 		builder.add(ATBlockProperties.CONNECTED);
+		builder.add(ATBlockProperties.PERSISTENT);
 	}
 	
 	@Override
 	public void onAdjacentBlockUpdate(Level level, int x, int y, int z, int face) {
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
+		if (state.get(ATBlockProperties.PERSISTENT)) return;
 		Vec3I pos = new Vec3I(x, y, z).move(state.get(ATBlockProperties.DIRECTION));
 		BlockState state2 = BlocksUtil.getBlockState(level, pos);
 		if (state2.isAir()) {

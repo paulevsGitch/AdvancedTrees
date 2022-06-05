@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class ATBlockProperties {
 	public static final DirectionProperty DIRECTION = DirectionProperty.of("direction", Direction.values());
+	public static final BooleanProperty PERSISTENT = BooleanProperty.of("persistent");
 	public static final BooleanProperty CONNECTED = BooleanProperty.of("connected");
 	public static final EnumProperty<Axis> AXIS = EnumProperty.of("axis", Direction.Axis.class);
 	private static final Map<Integer, IntProperty> AGES = new HashMap<>();
