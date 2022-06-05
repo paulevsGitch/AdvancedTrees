@@ -4,5 +4,5 @@ import net.minecraft.level.Level;
 
 @FunctionalInterface
 public interface SpawnChecker {
-	boolean canSpawn(Level leve, int x, int y, int z);
+	boolean canSpawn(Level leve, int x, int y, int z, int facing);
 }

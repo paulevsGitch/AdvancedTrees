@@ -8,24 +8,25 @@ import net.modificationstation.stationapi.api.registry.Identifier;
 import paulevs.advancedtrees.trees.structure.AdvancedTreeStructure;
 import paulevs.bhcore.util.BlocksUtil;
 
-import java.util.function.Supplier;
-
 public class ATSpawnerSaplingBlock extends ATTemplateNotFullBlock {
-	private final Supplier<AdvancedTreeStructure> structureSupplier;
+	private AdvancedTreeStructure structure;
 	
-	public ATSpawnerSaplingBlock(Identifier identifier, Supplier<AdvancedTreeStructure> structureSupplier) {
-		this(identifier, Material.PLANT, structureSupplier);
+	public ATSpawnerSaplingBlock(Identifier identifier) {
+		this(identifier, Material.PLANT);
 		setSounds(GRASS_SOUNDS);
 	}
 	
-	public ATSpawnerSaplingBlock(Identifier identifier, Material material, Supplier<AdvancedTreeStructure> structureSupplier) {
+	public ATSpawnerSaplingBlock(Identifier identifier, Material material) {
 		super(identifier, material);
-		this.structureSupplier = structureSupplier;
+	}
+	
+	public void setStructure(AdvancedTreeStructure structure) {
+		this.structure = structure;
 	}
 	
 	@Override
 	public void onBlockPlaced(Level level, int x, int y, int z) {
-		structureSupplier.get().generate(level, level.rand, x, y, z);
+		structure.generate(level, level.rand, x, y, z);
 	}
 	
 	@Override

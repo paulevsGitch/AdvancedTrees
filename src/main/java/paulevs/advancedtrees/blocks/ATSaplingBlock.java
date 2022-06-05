@@ -10,19 +10,22 @@ import paulevs.bhcore.util.BlocksUtil;
 import java.util.Random;
 
 public class ATSaplingBlock extends ATTemplateNotFullBlock {
-	private final ATDynamicLogBlock log;
-	private final ATLeavesBlock leaves;
+	private ATDynamicLogBlock log;
+	private ATLeavesBlock leaves;
 	
-	public ATSaplingBlock(Identifier identifier, ATDynamicLogBlock log, ATLeavesBlock leaves) {
-		this(identifier, Material.PLANT, log, leaves);
+	public ATSaplingBlock(Identifier identifier) {
+		this(identifier, Material.PLANT);
 		setSounds(GRASS_SOUNDS);
 	}
 	
-	public ATSaplingBlock(Identifier identifier, Material material, ATDynamicLogBlock log, ATLeavesBlock leaves) {
+	public ATSaplingBlock(Identifier identifier, Material material) {
 		super(identifier, material);
 		setTicksRandomly(true);
-		this.log = log;
+	}
+	
+	public void setLogAndLeaves(ATDynamicLogBlock log, ATLeavesBlock leaves) {
 		this.leaves = leaves;
+		this.log = log;
 	}
 	
 	@Override

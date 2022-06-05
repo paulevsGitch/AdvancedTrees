@@ -4,10 +4,13 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.PlayerBase;
+import net.minecraft.item.ItemInstance;
 import net.minecraft.level.BlockView;
 import net.minecraft.level.Level;
 import net.minecraft.util.maths.Box;
 import net.modificationstation.stationapi.api.block.BlockState;
+import net.modificationstation.stationapi.api.item.ItemConvertible;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import net.modificationstation.stationapi.api.state.StateManager;
 import net.modificationstation.stationapi.api.util.math.Direction;
@@ -22,9 +25,14 @@ import java.util.List;
 
 public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	protected static final Box BOUNDING_BOX = Box.create(0, 0, 0, 0, 0, 0);
+	private ItemConvertible drop;
 	
 	public ATLoglikeBlock(Identifier identifier, Material material) {
 		super(identifier, material);
+	}
+	
+	public void setDrop(ItemConvertible drop) {
+		this.drop = drop;
 	}
 	
 	@Override
@@ -98,6 +106,27 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	@Override
 	public void onBlockRemoved(Level level, int x, int y, int z) {
 		level.removeTileEntity(x, y, z);
+	}
+	
+	@Override
+	public void beforeDestroyedByExplosion(Level level, int x, int y, int z, int meta, float chance) {
+		if (drop != null) {
+			drop(level, x, y, z, new ItemInstance(drop.asItem()));
+		}
+	}
+	
+	@Override
+	public void afterBreak(Level level, PlayerBase player, int x, int y, int z, int meta) {
+		if (drop != null) {
+			drop(level, x, y, z, new ItemInstance(drop.asItem()));
+		}
+	}
+	
+	@Override
+	public boolean canPlaceAt(Level level, int x, int y, int z, int facing) {
+		Direction dir = BlocksUtil.fromFacing(facing).getOpposite();
+		Vec3I pos = new Vec3I(x, y, z).move(dir);
+		return isSupport(BlocksUtil.getBlockState(level, pos));
 	}
 	
 	public int getAge(BlockState state) {

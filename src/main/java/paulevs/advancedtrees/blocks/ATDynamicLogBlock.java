@@ -7,33 +7,38 @@ import net.modificationstation.stationapi.api.registry.Identifier;
 import paulevs.advancedtrees.tileentities.TreeTileEntity;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
+import paulevs.advancedtrees.trees.info.TreeInfo;
 import paulevs.bhcore.util.ToolsUtil;
 
 import java.util.Random;
-import java.util.function.Supplier;
 
 public class ATDynamicLogBlock extends ATLoglikeBlock {
-	private final Supplier<TreeBehaviour> behaviourSupplier;
+	private TreeBehaviour behaviour;
+	private TreeInfo treeInfo;
 	private final int age;
 	
-	public ATDynamicLogBlock(Identifier identifier, int age, Supplier<TreeBehaviour> behaviourSupplier) {
-		this(identifier, Material.WOOD, age, behaviourSupplier);
+	public ATDynamicLogBlock(Identifier identifier, int age) {
+		this(identifier, Material.WOOD, age);
 		ToolsUtil.setAxe(this, 0);
 	}
 	
-	public ATDynamicLogBlock(Identifier identifier, Material material, int age, Supplier<TreeBehaviour> behaviourSupplier) {
+	public ATDynamicLogBlock(Identifier identifier, Material material, int age) {
 		super(identifier, material);
 		setTicksRandomly(true);
 		this.age = age;
-		this.behaviourSupplier = behaviourSupplier;
+	}
+	
+	public void setTree(TreeBehaviour behaviour, TreeInfo treeInfo) {
+		this.behaviour = behaviour;
+		this.treeInfo = treeInfo;
 	}
 	
 	@Override
 	public void onScheduledTick(Level level, int x, int y, int z, Random random) {
 		TreeContext treeContext = TreeContext.getInstance();
-		treeContext.update(level, x, y, z);
+		treeContext.update(level, x, y, z, treeInfo);
 		if (treeContext.isValid()) {
-			behaviourSupplier.get().grow(treeContext);
+			behaviour.grow(treeContext);
 			treeContext.restoreEntity();
 		}
 	}
@@ -44,7 +49,7 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 	}
 	
 	public void createEntity(Level level, int x, int y, int z) {
-		int age = behaviourSupplier.get().getAge(level.rand);
+		int age = behaviour.getAge(level.rand);
 		TreeTileEntity treeTileEntity = new TreeTileEntity(age);
 		level.setTileEntity(x, y, z, treeTileEntity);
 	}

@@ -4,8 +4,6 @@ import net.mine_diver.unsafeevents.listener.EventListener;
 import net.modificationstation.stationapi.api.event.registry.BlockRegistryEvent;
 import net.modificationstation.stationapi.api.event.tags.TagRegisterEvent;
 import net.modificationstation.stationapi.api.event.tileentity.TileEntityRegisterEvent;
-import net.modificationstation.stationapi.api.tags.TagEntry;
-import net.modificationstation.stationapi.api.tags.TagRegistry;
 import paulevs.advancedtrees.AdvancedTrees;
 import paulevs.advancedtrees.tileentities.TreeTileEntity;
 import paulevs.advancedtrees.trees.VanillaTrees;

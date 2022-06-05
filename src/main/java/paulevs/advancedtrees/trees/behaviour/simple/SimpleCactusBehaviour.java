@@ -5,7 +5,6 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.MathHelper;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
-import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
@@ -17,11 +16,9 @@ import paulevs.bhcore.util.MathUtil;
 import java.util.Random;
 
 public class SimpleCactusBehaviour implements TreeBehaviour {
-	private final ATStaticLogBlock logStatic;
 	private final int maxAge;
 	
-	public SimpleCactusBehaviour(int maxAge, ATStaticLogBlock logStatic) {
-		this.logStatic = logStatic;
+	public SimpleCactusBehaviour(int maxAge) {
 		this.maxAge = maxAge;
 	}
 	
@@ -30,7 +27,7 @@ public class SimpleCactusBehaviour implements TreeBehaviour {
 		Level level = context.getLevel();
 		Vec3I blockPos = context.getBlockPos();
 		Direction dir = context.getBlock().get(ATBlockProperties.DIRECTION);
-		BlockState log = logStatic.getDefaultState().with(ATBlockProperties.DIRECTION, dir);
+		BlockState log = context.getTreeInfo().getLogStatic().getDefaultState().with(ATBlockProperties.DIRECTION, dir);
 		BlocksUtil.setBlockState(level, blockPos, log);
 		
 		int dist = context.getDistanceToOrigin();

@@ -7,18 +7,15 @@ import net.minecraft.entity.EntityBase;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
-import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
-
-import java.util.function.Supplier;
 
 public class CactusDynamicLogBlock extends ATDynamicLogBlock {
-	public CactusDynamicLogBlock(Identifier identifier, int age, Supplier<TreeBehaviour> behaviourSupplier) {
-		this(identifier, Material.WOOL, age, behaviourSupplier);
+	public CactusDynamicLogBlock(Identifier identifier, int age) {
+		this(identifier, Material.WOOL, age);
 		setHardness(0.5F);
 	}
 	
-	public CactusDynamicLogBlock(Identifier identifier, Material material, int age, Supplier<TreeBehaviour> behaviourSupplier) {
-		super(identifier, material, age, behaviourSupplier);
+	public CactusDynamicLogBlock(Identifier identifier, Material material, int age) {
+		super(identifier, material, age);
 	}
 	
 	@Environment(value= EnvType.CLIENT)

@@ -7,6 +7,7 @@ import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLoglikeBlock;
 import paulevs.advancedtrees.tileentities.TreeTileEntity;
+import paulevs.advancedtrees.trees.info.TreeInfo;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
@@ -21,6 +22,7 @@ public final class TreeContext {
 	private int generation;
 	private BlockState block;
 	private TreeTileEntity entity;
+	private TreeInfo info;
 	private Level level;
 	private int maxAge;
 	
@@ -108,15 +110,34 @@ public final class TreeContext {
 		return maxAge;
 	}
 	
-	
+	/**
+	 * Restores tile entity if it was destroyed by block setting.
+	 */
 	public void restoreEntity() {
 		if (entity != null && level.getTileEntity(treePos.x, treePos.y, treePos.z) != entity) {
 			level.setTileEntity(treePos.x, treePos.y, treePos.z, entity);
 		}
 	}
 	
-	public void update(Level level, int x, int y, int z) {
+	/**
+	 * Provide information about current tree.
+	 * @return {@link TreeInfo}.
+	 */
+	public TreeInfo getTreeInfo() {
+		return info;
+	}
+	
+	/**
+	 * Updates tree context for local tree
+	 * @param level {@link Level}
+	 * @param x X coordinate
+	 * @param y Y coordinate
+	 * @param z Z coordinate
+	 * @param info {@link TreeInfo}
+	 */
+	public void update(Level level, int x, int y, int z, TreeInfo info) {
 		this.level = level;
+		this.info = info;
 		
 		block = BlocksUtil.getBlockState(level, x, y, z);
 		if (!isValid()) return;

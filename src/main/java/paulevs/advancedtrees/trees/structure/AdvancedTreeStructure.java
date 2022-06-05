@@ -16,8 +16,8 @@ import java.util.Set;
 
 public class AdvancedTreeStructure extends Structure {
 	private static final Direction[] DIRECTIONS = Direction.values();
-	private final SpawnChecker checker;
 	private final ATDynamicLogBlock block;
+	private final SpawnChecker checker;
 	
 	public AdvancedTreeStructure(ATDynamicLogBlock block, SpawnChecker checker) {
 		this.checker = checker;
@@ -26,7 +26,7 @@ public class AdvancedTreeStructure extends Structure {
 	
 	@Override
 	public boolean generate(Level level, Random random, int x, int y, int z) {
-		if (!checker.canSpawn(level, x, y, z) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSaplingBlock)) {
+		if (!checker.canSpawn(level, x, y, z, 1) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSaplingBlock)) {
 			return false;
 		}
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());
