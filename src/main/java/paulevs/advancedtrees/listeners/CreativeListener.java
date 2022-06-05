@@ -21,6 +21,7 @@ public class CreativeListener {
 		event.register(tab);
 		addItems(VanillaTrees.OAK.getAvailableItems());
 		addItems(VanillaTrees.SPRUCE.getAvailableItems());
+		addItems(VanillaTrees.BIRCH.getAvailableItems());
 		addItems(VanillaTrees.CACTUS.getAvailableItems());
 	}
 	

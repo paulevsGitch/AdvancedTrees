@@ -2,6 +2,7 @@ package paulevs.advancedtrees.trees.structure;
 
 import net.minecraft.level.Level;
 import net.minecraft.level.structure.Structure;
+import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSaplingBlock;
@@ -26,9 +27,10 @@ public class AdvancedTreeStructure extends Structure {
 	
 	@Override
 	public boolean generate(Level level, Random random, int x, int y, int z) {
-		if (!checker.canSpawn(level, x, y, z, 1) && !(BlocksUtil.getBlockState(level, x, y, z).getBlock() instanceof ATSpawnerSaplingBlock)) {
+		if (!checker.canSpawn(level, x, y, z, 1) || !canReplace(BlocksUtil.getBlockState(level, x, y, z))) {
 			return false;
 		}
+		
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());
 		block.createEntity(level, x, y, z);
 		
@@ -59,5 +61,9 @@ public class AdvancedTreeStructure extends Structure {
 		}
 		
 		return true;
+	}
+	
+	protected boolean canReplace(BlockState state) {
+		return state.getMaterial().isReplaceable() || state.getBlock() instanceof ATSpawnerSaplingBlock;
 	}
 }

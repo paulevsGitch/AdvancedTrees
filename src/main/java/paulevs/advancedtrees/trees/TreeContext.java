@@ -84,7 +84,7 @@ public final class TreeContext {
 	 * Get current tree block.
 	 * @return {@link BlockState}
 	 */
-	public BlockState getBlock() {
+	public BlockState getBlockState() {
 		return block;
 	}
 	

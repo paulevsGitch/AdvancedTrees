@@ -8,59 +8,18 @@ import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLeavesBlock;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
-import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 import paulevs.advancedtrees.trees.info.TreeInfo;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
 import paulevs.bhcore.util.MathUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-public class SimpleTreeBehaviour implements TreeBehaviour {
-	protected final int maxAge;
-	
-	public SimpleTreeBehaviour(int maxAge) {
-		this.maxAge = maxAge;
+public class BirchTreeBehaviour extends SimpleTreeBehaviour {
+	public BirchTreeBehaviour(int maxAge) {
+		super(maxAge);
 	}
 	
 	@Override
-	public void grow(TreeContext context) {
-		TreeInfo info = context.getTreeInfo();
-		Level level = context.getLevel();
-		Vec3I blockPos = context.getBlockPos();
-		Direction dir = context.getBlockState().get(ATBlockProperties.DIRECTION);
-		BlockState log = info.getLogStatic().getDefaultState().with(ATBlockProperties.DIRECTION, dir);
-		BlocksUtil.setBlockState(level, blockPos, log);
-		
-		int dist = context.getDistanceToOrigin();
-		if (dist > maxAge) return;
-		int maxStoredAge = context.getMaxAge();
-		if (dist > maxStoredAge) return;
-		
-		Vec3I treePos = context.getTreePos();
-		Vec3I pos = blockPos.clone();
-		int gen = context.getGeneration();
-		
-		BlockState state = context.getBlockState();
-		
-		if (gen == 0) {
-			growTrunk(context, info, pos);
-		}
-		else {
-			growBranch(context, info, pos);
-		}
-		
-		TreeUtil.increaseAge(level, blockPos, maxAge);
-	}
-	
-	@Override
-	public int getAge(Random random) {
-		return MathUtil.randomRange(maxAge * 2 / 3, maxAge, random);
-	}
-	
 	protected void growTrunk(TreeContext context, TreeInfo info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I treePos = context.getTreePos();
@@ -69,9 +28,12 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		Level level = context.getLevel();
 		Direction dir;
 		
+		int minHeight = context.getMaxAge() / 2;
+		int hash = (int) MathHelper.hashCode(treePos.x, treePos.y, treePos.z);
+		
 		// Branching
-		if (dist > 2) {
-			int index = (dist + (int) MathHelper.hashCode(treePos.x, treePos.y, treePos.z)) & 3;
+		if (dist > minHeight && ((pos.y + hash) & 1) == 0) {
+			int index = ((dist >> 1) + hash) & 3;
 			dir = TreeUtil.HORIZONTAL_FIXED[index];
 			if (TreeUtil.canGrow(BlocksUtil.getBlockState(level, pos.set(blockPos).move(dir)))) {
 				removeOldLeaves(level, blockPos, info);
@@ -90,6 +52,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 	}
 	
+	@Override
 	protected void growBranch(TreeContext context, TreeInfo info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I blockPos = context.getBlockPos();
@@ -97,7 +60,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		Level level = context.getLevel();
 		Direction dir;
 		
-		if (level.rand.nextBoolean()) {
+		if (level.rand.nextInt(6) == 0) {
 			dir = TreeUtil.getHorizontalGrowDir(level, blockPos);
 			if (dir != null) {
 				removeOldLeaves(level, blockPos, info);
@@ -108,10 +71,10 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 		
 		if (level.rand.nextInt(4) == 0) {
-			dir = TreeUtil.getVerticalGrowDir(level, blockPos);
+			dir = TreeUtil.getHorizontalGrowDir(level, blockPos);
 		}
 		else {
-			dir = TreeUtil.getHorizontalGrowDir(level, blockPos);
+			dir = TreeUtil.getVerticalGrowDir(level, blockPos);
 		}
 		
 		if (dir != null) {
@@ -122,36 +85,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 	}
 	
-	protected void removeOldLeaves(Level level, Vec3I blockPos, TreeInfo info) {
-		Vec3I pos = new Vec3I();
-		Vec3I pos2 = new Vec3I();
-		List<Vec3I> positions = new ArrayList<>();
-		ATLeavesBlock leaves = info.getLeaves();
-		for (Direction dir: MathUtil.DIRECTIONS) {
-			pos.set(blockPos).move(dir);
-			BlockState state = BlocksUtil.getBlockState(level, pos);
-			if (state.getBlock() == leaves && state.get(ATBlockProperties.DIRECTION).getOpposite() == dir) {
-				removeOldLeaves(level, pos, pos2, positions, info);
-			}
-		}
-		for (int i = positions.size() - 1; i >= 0; i--) {
-			Vec3I p = positions.get(i);
-			level.setTile(p.x, p.y, p.z, 0);
-		}
-	}
-	
-	protected void removeOldLeaves(Level level, Vec3I blockPos, Vec3I pos, List<Vec3I> positions, TreeInfo info) {
-		ATLeavesBlock leaves = info.getLeaves();
-		positions.add(blockPos.clone());
-		for (Direction dir: MathUtil.DIRECTIONS) {
-			pos.set(blockPos).move(dir);
-			BlockState state = BlocksUtil.getBlockState(level, pos);
-			if (state.getBlock() == leaves && state.get(ATBlockProperties.DIRECTION).getOpposite() == dir) {
-				removeOldLeaves(level, pos.clone(), pos, positions, info);
-			}
-		}
-	}
-	
+	@Override
 	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeInfo info) {
 		BlockState defaultState = info.getLeaves().getDefaultState();
 		BlockState connected = defaultState.with(ATBlockProperties.CONNECTED, true);
@@ -166,7 +100,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 			}
 		}
 		
-		if (dis > 2) {
+		if (dis > 3) {
 			for (Direction dir: TreeUtil.HORIZONTAL_RANDOM) {
 				pos.set(blockPos).move(dir);
 				BlockState state = BlocksUtil.getBlockState(level, pos);
@@ -188,10 +122,20 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 					state = defaultState.with(ATBlockProperties.DIRECTION, dir.getOpposite());
 					BlocksUtil.setBlockState(level, pos, state);
 				}
+				
+				pos.y--;
+				state = BlocksUtil.getBlockState(level, pos);
+				if (state.getBlock() == leaves) {
+					pos.y--;
+					if (state.isAir()) {
+						state = defaultState.with(ATBlockProperties.DIRECTION, Direction.UP);
+						BlocksUtil.setBlockState(level, pos, state);
+					}
+				}
 			}
 		}
 		
-		if (dis > 4) {
+		if (dis > 6) {
 			for (Direction dir: TreeUtil.HORIZONTAL_RANDOM) {
 				Direction side = MathUtil.rotateCW(dir);
 				pos.set(blockPos).move(dir, 2).move(side, -2);
@@ -214,6 +158,18 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 						BlocksUtil.setBlockState(level, pos, defaultState);
 					}
 				}
+				
+				/*pos.set(blockPos).move(dir);
+				pos.y--;
+				state = BlocksUtil.getBlockState(level, pos);
+				if (state.getBlock() == leaves) {
+					pos.y--;
+					state = BlocksUtil.getBlockState(level, pos);
+					if (state.isAir()) {
+						state = defaultState.with(ATBlockProperties.DIRECTION, Direction.UP);
+						BlocksUtil.setBlockState(level, pos, state);
+					}
+				}*/
 			}
 		}
 	}

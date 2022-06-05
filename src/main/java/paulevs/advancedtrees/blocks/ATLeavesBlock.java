@@ -28,6 +28,8 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	
 	public ATLeavesBlock(Identifier identifier, Material material) {
 		super(identifier, material);
+		setTranslationKey(identifier.modID, identifier.id);
+		setHardness(0.5F);
 		setDefaultState(getDefaultState()
 			.with(ATBlockProperties.DIRECTION, Direction.DOWN)
 			.with(ATBlockProperties.CONNECTED, false)

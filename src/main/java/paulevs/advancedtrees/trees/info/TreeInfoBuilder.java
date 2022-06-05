@@ -189,4 +189,21 @@ public class TreeInfoBuilder {
 			.addCactusSpawnerSapling()
 			.build(behaviour);
 	}
+	
+	/*public static TreeInfo variation(Identifier id, TreeInfo info, TreeBehaviour behaviour) {
+		SpawnChecker checker = info.getSapling() == null ? info.getLogDynamic()::canPlaceAt : info.getSapling()::canPlaceAt;
+		AdvancedTreeStructure structure = new AdvancedTreeStructure(info.getLogDynamic(), checker);
+		TreeInfo result = new TreeInfo(
+			id,
+			info.getLogStatic(),
+			info.getLogDynamic(),
+			info.getLog(),
+			info.getStem(),
+			info.getLeaves(),
+			info.getSapling(),
+			info.getSpawnerSapling(),
+			structure
+		);
+		return result;
+	}*/
 }

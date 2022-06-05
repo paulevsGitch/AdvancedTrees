@@ -10,6 +10,7 @@ public class DataGenerator {
 	public static void main(String[] args) {
 		//generateTreeModels("oak", 1, 7);
 		//generateTreeModels("spruce", 1, 7);
+		//generateTreeModels("birch", 1, 5);
 		//generateTreeModels("cactus", 2, 4);
 	}
 	

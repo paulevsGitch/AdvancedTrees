@@ -1,7 +1,23 @@
 tab.at_tab.name=Advanced Trees
-tile.oak_sapling.name=Oak Sapling
+
 tile.oak_spawner_sapling.name=Oak Spawner Sapling
-tile.cactus_spawner_sapling.name=Cactus Spawner Sapling
+tile.oak_sapling.name=Oak Sapling
+tile.oak_leaves.name=Oak Leaves
 tile.oak_stem.name=Oak Stem
+tile.oak_log.name=Oak Log
+
+tile.birch_spawner_sapling.name=Birch Spawner Sapling
+tile.birch_sapling.name=Birch Sapling
+tile.birch_leaves.name=Birch Leaves
+tile.birch_stem.name=Birch Stem
+tile.birch_log.name=Birch Log
+
+tile.spruce_spawner_sapling.name=Spruce Spawner Sapling
+tile.spruce_sapling.name=Spruce Sapling
+tile.spruce_leaves.name=Spruce Leaves
 tile.spruce_stem.name=Spruce Stem
+tile.spruce_log.name=Spruce Log
+
+tile.cactus_spawner_sapling.name=Cactus Spawner Sapling
 tile.cactus_stem.name=Cactus Stem
+tile.cactus_log.name=Cactus Log

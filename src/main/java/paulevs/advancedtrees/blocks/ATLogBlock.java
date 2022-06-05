@@ -22,6 +22,7 @@ public class ATLogBlock extends TemplateBlockBase {
 	
 	public ATLogBlock(Identifier identifier, Material material) {
 		super(identifier, material);
+		setTranslationKey(identifier.modID, identifier.id);
 		setBlastResistance(0.5F);
 		setHardness(1F);
 	}

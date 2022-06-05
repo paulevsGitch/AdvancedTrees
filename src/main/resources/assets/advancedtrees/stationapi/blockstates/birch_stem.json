@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"axis=y": { "model": "advancedtrees:block/birch_stem" },
+		"axis=z": { "model": "advancedtrees:block/birch_stem", "x": 90 },
+		"axis=x": { "model": "advancedtrees:block/birch_stem", "x": 90, "y": 90 }
+	}
+}

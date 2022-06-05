@@ -5,6 +5,7 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.MathHelper;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
+import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
 import paulevs.advancedtrees.trees.info.TreeInfo;
 import paulevs.bhcore.storage.vector.Vec3I;
@@ -18,7 +19,13 @@ public class CedarTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growTrunk(Level level, Vec3I treePos, Vec3I blockPos, Vec3I pos, int dist, BlockState state, TreeInfo info) {
+	protected void growTrunk(TreeContext context, TreeInfo info, Vec3I pos) {
+		int dist = context.getDistanceToOrigin();
+		Vec3I treePos = context.getTreePos();
+		Vec3I blockPos = context.getBlockPos();
+		BlockState state = context.getBlockState();
+		Level level = context.getLevel();
+		
 		int offset = (dist + (int) MathHelper.hashCode(treePos.x, treePos.y, treePos.z)) & 1;
 		
 		// Branching
@@ -44,7 +51,12 @@ public class CedarTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growBranch(Level level, Vec3I blockPos, Vec3I pos, BlockState state, int dist, TreeInfo info) {
+	protected void growBranch(TreeContext context, TreeInfo info, Vec3I pos) {
+		int dist = context.getDistanceToOrigin();
+		Vec3I blockPos = context.getBlockPos();
+		BlockState state = context.getBlockState();
+		Level level = context.getLevel();
+		
 		TreeUtil.shuffle(level.rand, TreeUtil.HORIZONTAL_RANDOM);
 		for (Direction dir: TreeUtil.HORIZONTAL_RANDOM) {
 			pos.set(blockPos).move(dir);

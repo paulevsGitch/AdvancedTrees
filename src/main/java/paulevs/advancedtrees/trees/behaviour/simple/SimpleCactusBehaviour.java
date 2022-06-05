@@ -26,7 +26,7 @@ public class SimpleCactusBehaviour implements TreeBehaviour {
 	public void grow(TreeContext context) {
 		Level level = context.getLevel();
 		Vec3I blockPos = context.getBlockPos();
-		Direction dir = context.getBlock().get(ATBlockProperties.DIRECTION);
+		Direction dir = context.getBlockState().get(ATBlockProperties.DIRECTION);
 		BlockState log = context.getTreeInfo().getLogStatic().getDefaultState().with(ATBlockProperties.DIRECTION, dir);
 		BlocksUtil.setBlockState(level, blockPos, log);
 		
@@ -40,7 +40,7 @@ public class SimpleCactusBehaviour implements TreeBehaviour {
 		Vec3I pos = blockPos.clone();
 		int gen = context.getGeneration();
 		
-		BlockState state = context.getBlock();
+		BlockState state = context.getBlockState();
 		
 		if (gen == 0) {
 			growTrunk(level, treePos, blockPos, pos, dist, state);

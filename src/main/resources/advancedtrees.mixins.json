@@ -4,10 +4,12 @@
 	"package": "paulevs.advancedtrees.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"RainforestMixin",
-		"CactusMixin",
-		"ForestMixin",
-		"BiomeMixin"
+		"SpruceTreeMixin",
+		"BirchTreeMixin",
+		"LargeOakMixin",
+		"PineTreeMixin",
+		"OakTreeMixin",
+		"CactusMixin"
 	],
 	"client": [],
 	"injectors": {

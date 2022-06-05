@@ -1,0 +1,71 @@
+{
+	"multipart": [
+		{
+			"apply": {
+				"model": "advancedtrees:block/birch_leaves"
+			}
+		},
+		{
+			"when": {
+				"connected": "true",
+				"direction": "down"
+			},
+			"apply": {
+				"model": "advancedtrees:block/birch_log_1"
+			}
+		},
+		{
+			"when": {
+				"connected": "true",
+				"direction": "up"
+			},
+			"apply": {
+				"model": "advancedtrees:block/birch_log_1",
+				"x": 180
+			}
+		},
+		{
+			"when": {
+				"connected": "true",
+				"direction": "east"
+			},
+			"apply": {
+				"model": "advancedtrees:block/birch_log_1",
+				"x": 90,
+				"y": 180
+			}
+		},
+		{
+			"when": {
+				"connected": "true",
+				"direction": "west"
+			},
+			"apply": {
+				"model": "advancedtrees:block/birch_log_1",
+				"x": 90
+			}
+		},
+		{
+			"when": {
+				"connected": "true",
+				"direction": "north"
+			},
+			"apply": {
+				"model": "advancedtrees:block/birch_log_1",
+				"x": 90,
+				"y": 90
+			}
+		},
+		{
+			"when": {
+				"connected": "true",
+				"direction": "south"
+			},
+			"apply": {
+				"model": "advancedtrees:block/birch_log_1",
+				"x": 90,
+				"y": 270
+			}
+		}
+	]
+}
