@@ -163,6 +163,7 @@ public class TreeInfoBuilder {
 		if (logDynamic != null) logDynamic.setDrop(stemBlock);
 		if (leaves != null) leaves.setDrop(sapling, saplingDropChance);
 		if (spawnerSapling != null) spawnerSapling.setStructure(structure);
+		if (sapling != null) sapling.setLogAndLeaves(logDynamic, leaves);
 		TreeInfo info = new TreeInfo(id, logStatic, logDynamic, log, stemBlock, leaves, sapling, spawnerSapling, structure);
 		if (logDynamic != null) logDynamic.setTree(behaviour, info);
 		return info;

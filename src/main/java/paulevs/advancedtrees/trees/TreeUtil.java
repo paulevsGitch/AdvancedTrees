@@ -1,7 +1,6 @@
 package paulevs.advancedtrees.trees;
 
 import net.minecraft.block.BlockBase;
-import net.minecraft.block.Fluid;
 import net.minecraft.block.Leaves;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -57,9 +56,9 @@ public class TreeUtil {
 	
 	// TODO Replace condition with tags
 	public static boolean canGrow(BlockState state) {
-		if (state.isAir()) return true;
+		if (state.getMaterial().isReplaceable()) return true;
 		BlockBase block = state.getBlock();
-		return block instanceof ATLeavesBlock || block instanceof Leaves || block instanceof Fluid;
+		return block instanceof ATLeavesBlock || block instanceof Leaves;
 	}
 	
 	/**

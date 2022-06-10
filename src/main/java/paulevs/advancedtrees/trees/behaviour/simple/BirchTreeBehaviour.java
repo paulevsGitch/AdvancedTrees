@@ -5,9 +5,9 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import net.modificationstation.stationapi.api.util.math.MathHelper;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
-import paulevs.advancedtrees.blocks.ATLeavesBlock;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
+import paulevs.advancedtrees.trees.behaviour.crown.PatternCrown;
 import paulevs.advancedtrees.trees.info.TreeInfo;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
@@ -15,6 +15,8 @@ import paulevs.bhcore.util.ClientUtil;
 import paulevs.bhcore.util.MathUtil;
 
 public class BirchTreeBehaviour extends SimpleTreeBehaviour {
+	private static final PatternCrown[] CROWNS;
+	
 	public BirchTreeBehaviour(int maxAge) {
 		super(maxAge);
 	}
@@ -87,90 +89,108 @@ public class BirchTreeBehaviour extends SimpleTreeBehaviour {
 	
 	@Override
 	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeInfo info) {
-		BlockState defaultState = info.getLeaves().getDefaultState();
-		BlockState connected = defaultState.with(ATBlockProperties.CONNECTED, true);
-		ATLeavesBlock leaves = info.getLeaves();
-		
-		for (Direction dir: TreeUtil.VERTICAL_GROW) {
-			pos.set(blockPos).move(dir);
-			BlockState state = BlocksUtil.getBlockState(level, pos);
-			if (state.isAir()) {
-				state = connected.with(ATBlockProperties.DIRECTION, dir.getOpposite());
-				BlocksUtil.setBlockState(level, pos, state);
-			}
-		}
-		
-		if (dis > 3) {
-			for (Direction dir: TreeUtil.HORIZONTAL_RANDOM) {
-				pos.set(blockPos).move(dir);
-				BlockState state = BlocksUtil.getBlockState(level, pos);
-				if (state.getBlock() == leaves) {
-					Direction dir2 = MathUtil.rotateCW(dir);
-					pos.move(dir2);
-					state = BlocksUtil.getBlockState(level, pos);
-					if (state.isAir()) {
-						state = defaultState.with(ATBlockProperties.DIRECTION, dir2.getOpposite());
-						BlocksUtil.setBlockState(level, pos, state);
-					}
+		int index = MathUtil.clamp((int) (dis * CROWNS.length * 1.5F / maxAge), 0, CROWNS.length - 1);
+		System.out.println(index);
+		CROWNS[index].place(level, blockPos, info);
+	}
+	
+	static {
+		CROWNS = new PatternCrown[] {
+			new PatternCrown(new String[][] {
+				new String[] {
+					"###",
+					"# #",
+					"###"
+				},
+				new String[] {
+					" # ",
+					"###",
+					" # "
 				}
-				
-				pos.set(blockPos).move(dir);
-				pos.y++;
-				
-				state = BlocksUtil.getBlockState(level, pos);
-				if (state.isAir()) {
-					state = defaultState.with(ATBlockProperties.DIRECTION, dir.getOpposite());
-					BlocksUtil.setBlockState(level, pos, state);
+			}, new Vec3I(1, 0, 1)),
+			new PatternCrown(new String[][] {
+				new String[] {
+					"# #",
+					"   ",
+					"# #"
+				},
+				new String[] {
+					"###",
+					"# #",
+					"###"
+				},
+				new String[] {
+					" # ",
+					"###",
+					" # "
 				}
-				
-				pos.y--;
-				state = BlocksUtil.getBlockState(level, pos);
-				if (state.getBlock() == leaves) {
-					pos.y--;
-					if (state.isAir()) {
-						state = defaultState.with(ATBlockProperties.DIRECTION, Direction.UP);
-						BlocksUtil.setBlockState(level, pos, state);
-					}
+			}, new Vec3I(1, 1, 1)),
+			new PatternCrown(new String[][] {
+				new String[] {
+					"#  ",
+					"   ",
+					"  #"
+				},
+				new String[] {
+					"# #",
+					"   ",
+					"# #"
+				},
+				new String[] {
+					"###",
+					"# #",
+					"###"
+				},
+				new String[] {
+					" # ",
+					"###",
+					" # "
 				}
-			}
-		}
-		
-		if (dis > 6) {
-			for (Direction dir: TreeUtil.HORIZONTAL_RANDOM) {
-				Direction side = MathUtil.rotateCW(dir);
-				pos.set(blockPos).move(dir, 2).move(side, -2);
-				for (byte i = 0; i < 3; i++) {
-					BlockState state = BlocksUtil.getBlockState(level, pos.move(side));
-					if (state.isAir()) {
-						state = BlocksUtil.getBlockState(level, pos.move(dir.getOpposite()));
-						if (state.getBlock() == leaves) {
-							state = defaultState.with(ATBlockProperties.DIRECTION, dir.getOpposite());
-							BlocksUtil.setBlockState(level, pos.move(dir), state);
-						}
-					}
+			}, new Vec3I(1, 2, 1)),
+			new PatternCrown(new String[][] {
+				new String[] {
+					"     ",
+					"   # ",
+					"     ",
+					" #   ",
+					"     "
+				},
+				new String[] {
+					"     ",
+					" # # ",
+					"     ",
+					" # # ",
+					"     "
+				},
+				new String[] {
+					"  #  ",
+					" ### ",
+					"## ##",
+					" ### ",
+					"  #  "
+				},
+				new String[] {
+					"  #  ",
+					" ### ",
+					"## ##",
+					" ### ",
+					"  #  "
+				},
+				new String[] {
+					"     ",
+					" ### ",
+					" ### ",
+					" ### ",
+					"     "
+				},
+				new String[] {
+					"     ",
+					"  #  ",
+					" ### ",
+					"  #  ",
+					"     "
 				}
-				
-				pos.set(blockPos).move(dir).move(side);
-				BlockState state = BlocksUtil.getBlockState(level, pos);
-				if (state.getBlock() == leaves) {
-					pos.y++;
-					if (state.isAir()) {
-						BlocksUtil.setBlockState(level, pos, defaultState);
-					}
-				}
-				
-				/*pos.set(blockPos).move(dir);
-				pos.y--;
-				state = BlocksUtil.getBlockState(level, pos);
-				if (state.getBlock() == leaves) {
-					pos.y--;
-					state = BlocksUtil.getBlockState(level, pos);
-					if (state.isAir()) {
-						state = defaultState.with(ATBlockProperties.DIRECTION, Direction.UP);
-						BlocksUtil.setBlockState(level, pos, state);
-					}
-				}*/
-			}
-		}
+			}, new Vec3I(2, 3, 2))
+		};
 	}
 }

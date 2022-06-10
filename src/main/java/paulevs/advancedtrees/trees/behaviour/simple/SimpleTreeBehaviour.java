@@ -40,11 +40,8 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		int maxStoredAge = context.getMaxAge();
 		if (dist > maxStoredAge) return;
 		
-		Vec3I treePos = context.getTreePos();
 		Vec3I pos = blockPos.clone();
 		int gen = context.getGeneration();
-		
-		BlockState state = context.getBlockState();
 		
 		if (gen == 0) {
 			growTrunk(context, info, pos);

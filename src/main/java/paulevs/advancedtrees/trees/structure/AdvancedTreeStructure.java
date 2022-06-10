@@ -27,8 +27,11 @@ public class AdvancedTreeStructure extends Structure {
 	
 	@Override
 	public boolean generate(Level level, Random random, int x, int y, int z) {
-		if (!checker.canSpawn(level, x, y, z, 1) || !canReplace(BlocksUtil.getBlockState(level, x, y, z))) {
-			return false;
+		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
+		if (!(state.getBlock() instanceof ATSpawnerSaplingBlock)) {
+			if (!checker.canSpawn(level, x, y, z, 1) || !state.getMaterial().isReplaceable()) {
+				return false;
+			}
 		}
 		
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());
@@ -61,9 +64,5 @@ public class AdvancedTreeStructure extends Structure {
 		}
 		
 		return true;
-	}
-	
-	protected boolean canReplace(BlockState state) {
-		return state.getMaterial().isReplaceable() || state.getBlock() instanceof ATSpawnerSaplingBlock;
 	}
 }
