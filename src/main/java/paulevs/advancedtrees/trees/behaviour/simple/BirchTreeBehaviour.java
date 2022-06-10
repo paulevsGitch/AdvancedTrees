@@ -90,7 +90,6 @@ public class BirchTreeBehaviour extends SimpleTreeBehaviour {
 	@Override
 	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeInfo info) {
 		int index = MathUtil.clamp((int) (dis * CROWNS.length * 1.5F / maxAge), 0, CROWNS.length - 1);
-		System.out.println(index);
 		CROWNS[index].place(level, blockPos, info);
 	}
 	

@@ -82,9 +82,6 @@ public class PatternCrown implements TreeCrown {
 			ends.clear();
 			run = !newEnds.isEmpty();
 		}
-		
-		System.out.println("Size " + blocks.size());
-		System.out.println(blocks);
 	}
 	
 	@Override
@@ -92,19 +89,6 @@ public class PatternCrown implements TreeCrown {
 		Vec3I p = new Vec3I();
 		ATLeavesBlock leafBlock = info.getLeaves();
 		blocks.forEach(blockInfo -> {
-			/*p.set(pos).add(blockInfo.pos).move(blockInfo.dir);
-			BlockState state = BlocksUtil.getBlockState(level, p);
-			boolean isLog = state.getBlock() instanceof ATLogBlock;
-			//System.out.println((state.getBlock() == leafBlock) + " " + isLog);
-			//System.out.println(state.getBlock() + " " +  leafBlock);
-			//if (state.getBlock() == leafBlock || isLog) {
-				p.move(blockInfo.dir, -1);
-				if (BlocksUtil.getBlockState(level, p).getMaterial().isReplaceable()) {
-					state = leafBlock.getDefaultState().with(ATBlockProperties.CONNECTED, isLog).with(ATBlockProperties.DIRECTION, blockInfo.dir);
-					BlocksUtil.setBlockState(level, p, state);
-				}
-			//}*/
-			
 			Direction face = blockInfo.dir.getOpposite();
 			p.set(pos).add(blockInfo.pos);//.move(face);
 			int facing = face.ordinal();
