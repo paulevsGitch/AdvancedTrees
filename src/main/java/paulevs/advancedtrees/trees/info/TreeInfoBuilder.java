@@ -1,6 +1,6 @@
 package paulevs.advancedtrees.trees.info;
 
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
 import paulevs.advancedtrees.blocks.ATLeavesBlock;
@@ -26,7 +26,7 @@ public class TreeInfoBuilder {
 	private ATStemBlock stemBlock;
 	private int saplingDropChance;
 	private ATLeavesBlock leaves;
-	private BlockBase log;
+	private BaseBlock log;
 	private Identifier id;
 	private int minAge;
 	private int maxAge;
@@ -58,16 +58,16 @@ public class TreeInfoBuilder {
 	
 	/**
 	 * Add normal (full) log block to the {@link TreeInfo}.
-	 * @param log {@link BlockBase} to add as log
+	 * @param log {@link BaseBlock} to add as log
 	 * @return same {@link TreeInfoBuilder} instance
 	 */
-	public TreeInfoBuilder addLog(BlockBase log) {
+	public TreeInfoBuilder addLog(BaseBlock log) {
 		this.log = log;
 		return this;
 	}
 	
 	/**
-	 * Add simple log block to the tree. Will call {@code addLogBlock(BlockBase log)} with
+	 * Add simple log block to the tree. Will call {@code addLogBlock(BaseBlock log)} with
 	 * {@link ATLogBlock} instance as an argument.
 	 * @return same {@link TreeInfoBuilder} instance
 	 */
@@ -76,7 +76,7 @@ public class TreeInfoBuilder {
 	}
 	
 	/**
-	 * Add cactus log block to the tree. Will call {@code addLogBlock(BlockBase log)} with
+	 * Add cactus log block to the tree. Will call {@code addLogBlock(BaseBlock log)} with
 	 * {@link CactusLogBlock} instance as an argument.
 	 * @return same {@link TreeInfoBuilder} instance
 	 */

@@ -1,6 +1,6 @@
 package paulevs.advancedtrees.blocks;
 
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -28,7 +28,7 @@ public class ATLogBlock extends TemplateBlockBase {
 	}
 	
 	@Override
-	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
+	public void appendProperties(StateManager.Builder<BaseBlock, BlockState> builder) {
 		super.appendProperties(builder);
 		builder.add(ATBlockProperties.AXIS);
 	}

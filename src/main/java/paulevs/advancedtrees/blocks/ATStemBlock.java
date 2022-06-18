@@ -2,7 +2,7 @@ package paulevs.advancedtrees.blocks;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.level.BlockView;
 import net.minecraft.level.Level;
@@ -34,7 +34,7 @@ public class ATStemBlock extends ATTemplateNotFullBlock {
 	}
 	
 	@Override
-	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
+	public void appendProperties(StateManager.Builder<BaseBlock, BlockState> builder) {
 		super.appendProperties(builder);
 		builder.add(ATBlockProperties.AXIS);
 	}

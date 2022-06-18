@@ -2,10 +2,10 @@ package paulevs.advancedtrees.blocks;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.PlayerBase;
-import net.minecraft.item.ItemInstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.level.BlockView;
 import net.minecraft.level.Level;
 import net.minecraft.util.maths.Box;
@@ -36,7 +36,7 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	}
 	
 	@Override
-	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
+	public void appendProperties(StateManager.Builder<BaseBlock, BlockState> builder) {
 		super.appendProperties(builder);
 		builder.add(ATBlockProperties.DIRECTION);
 	}
@@ -93,32 +93,32 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		
 		for (int i = connectedBlocks.size() - 1; i >= 0; i--) {
 			pos = connectedBlocks.get(i);
-			BlockBase block = BlocksUtil.getBlockState(level, pos).getBlock();
-			block.drop(level, pos.x, pos.y, pos.z, level.getTileMeta(pos.x, pos.y, pos.z));
-			level.setTile(pos.x, pos.y, pos.z, 0);
+			BaseBlock block = BlocksUtil.getBlockState(level, pos).getBlock();
+			block.drop(level, pos.x, pos.y, pos.z, level.getBlockMeta(pos.x, pos.y, pos.z));
+			level.setBlock(pos.x, pos.y, pos.z, 0);
 		}
 		
-		level.removeTileEntity(x, y, z);
-		this.drop(level, x, y, z, level.getTileMeta(x, y, z));
-		level.setTile(x, y, z, 0);
+		level.removeBlockEntity(x, y, z);
+		this.drop(level, x, y, z, level.getBlockMeta(x, y, z));
+		level.setBlock(x, y, z, 0);
 	}
 	
 	@Override
 	public void onBlockRemoved(Level level, int x, int y, int z) {
-		level.removeTileEntity(x, y, z);
+		level.removeBlockEntity(x, y, z);
 	}
 	
 	@Override
-	public void beforeDestroyedByExplosion(Level level, int x, int y, int z, int meta, float chance) {
+	public void drop(Level level, int x, int y, int z, int meta, float chance) {
 		if (drop != null) {
-			drop(level, x, y, z, new ItemInstance(drop.asItem()));
+			drop(level, x, y, z, new ItemStack(drop.asItem()));
 		}
 	}
 	
 	@Override
 	public void afterBreak(Level level, PlayerBase player, int x, int y, int z, int meta) {
 		if (drop != null) {
-			drop(level, x, y, z, new ItemInstance(drop.asItem()));
+			drop(level, x, y, z, new ItemStack(drop.asItem()));
 		}
 	}
 	

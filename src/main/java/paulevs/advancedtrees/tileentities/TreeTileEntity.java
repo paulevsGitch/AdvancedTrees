@@ -1,10 +1,10 @@
 package paulevs.advancedtrees.tileentities;
 
-import net.minecraft.tileentity.TileEntityBase;
+import net.minecraft.block.entity.BaseBlockEntity;
 import net.minecraft.util.io.CompoundTag;
 import paulevs.bhcore.interfaces.IndependentTileEntity;
 
-public class TreeTileEntity extends TileEntityBase implements IndependentTileEntity {
+public class TreeTileEntity extends BaseBlockEntity implements IndependentTileEntity {
 	private int maxAge;
 	
 	public TreeTileEntity() {}

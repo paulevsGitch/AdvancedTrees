@@ -35,8 +35,8 @@ public class ATSaplingBlock extends ATSaplingLikeBlock {
 	@Override
 	public void onScheduledTick(Level level, int x, int y, int z, Random random) {
 		if (!canStay(level, x, y, z)) {
-			this.drop(level, x, y, z, level.getTileMeta(x, y, z));
-			level.setTile(x, y, z, 0);
+			this.drop(level, x, y, z, level.getBlockMeta(x, y, z));
+			level.setBlock(x, y, z, 0);
 		}
 		else if (canGrowTree(level, x, y, z)) {
 			BlocksUtil.setBlockState(level, x, y, z, log.getDefaultState());

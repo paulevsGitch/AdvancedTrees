@@ -1,8 +1,8 @@
 package paulevs.advancedtrees.listeners;
 
 import net.mine_diver.unsafeevents.listener.EventListener;
-import net.minecraft.block.BlockBase;
-import net.minecraft.item.ItemInstance;
+import net.minecraft.block.BaseBlock;
+import net.minecraft.item.ItemStack;
 import net.modificationstation.stationapi.api.item.ItemConvertible;
 import paulevs.advancedtrees.AdvancedTrees;
 import paulevs.advancedtrees.trees.VanillaTrees;
@@ -17,7 +17,7 @@ public class CreativeListener {
 	
 	@EventListener
 	public void onTabInit(TabRegistryEvent event) {
-		tab = new SimpleTab(AdvancedTrees.makeID("at_tab"), (ItemConvertible) BlockBase.LOG);
+		tab = new SimpleTab(AdvancedTrees.makeID("at_tab"), (ItemConvertible) BaseBlock.LOG);
 		event.register(tab);
 		addItems(VanillaTrees.OAK.getAvailableItems());
 		addItems(VanillaTrees.SPRUCE.getAvailableItems());
@@ -26,6 +26,6 @@ public class CreativeListener {
 	}
 	
 	private void addItems(List<ItemConvertible> items) {
-		items.forEach(item -> CreativeListener.tab.addItem(new ItemInstance(item.asItem())));
+		items.forEach(item -> CreativeListener.tab.addItem(new ItemStack(item.asItem())));
 	}
 }

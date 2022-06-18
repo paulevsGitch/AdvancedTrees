@@ -1,7 +1,7 @@
 package paulevs.advancedtrees.trees.info;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.modificationstation.stationapi.api.item.ItemConvertible;
 import net.modificationstation.stationapi.api.registry.Identifier;
 import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
@@ -24,10 +24,10 @@ public class TreeInfo {
 	private final ATLeavesBlock leaves;
 	private final ATSaplingBlock sapling;
 	private final ATStemBlock stem;
-	private final BlockBase log;
+	private final BaseBlock log;
 	private final Identifier id;
 	
-	public TreeInfo(Identifier id, ATStaticLogBlock logStatic, ATDynamicLogBlock logDynamic, BlockBase log, ATStemBlock stem, ATLeavesBlock leaves, ATSaplingBlock sapling, ATSpawnerSaplingBlock spawnerSapling, AdvancedTreeStructure structure) {
+	public TreeInfo(Identifier id, ATStaticLogBlock logStatic, ATDynamicLogBlock logDynamic, BaseBlock log, ATStemBlock stem, ATLeavesBlock leaves, ATSaplingBlock sapling, ATSpawnerSaplingBlock spawnerSapling, AdvancedTreeStructure structure) {
 		this.spawnerSapling = spawnerSapling;
 		this.logDynamic = logDynamic;
 		this.structure = structure;
@@ -75,7 +75,7 @@ public class TreeInfo {
 		return stem;
 	}
 	
-	public BlockBase getLog() {
+	public BaseBlock getLog() {
 		return log;
 	}
 	

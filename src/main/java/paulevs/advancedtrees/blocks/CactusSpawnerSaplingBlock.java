@@ -1,6 +1,6 @@
 package paulevs.advancedtrees.blocks;
 
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -21,7 +21,7 @@ public class CactusSpawnerSaplingBlock extends ATSpawnerSaplingBlock {
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
 		if (!state.getMaterial().isReplaceable()) return false;
 		state = BlocksUtil.getBlockState(level, x, y - 1, z);
-		BlockBase block = state.getBlock();
-		return block == BlockBase.SAND;
+		BaseBlock block = state.getBlock();
+		return block == BaseBlock.SAND;
 	}
 }

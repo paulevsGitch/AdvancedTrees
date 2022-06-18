@@ -1,7 +1,7 @@
 package paulevs.advancedtrees.trees;
 
+import net.minecraft.block.entity.BaseBlockEntity;
 import net.minecraft.level.Level;
-import net.minecraft.tileentity.TileEntityBase;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
@@ -114,8 +114,8 @@ public final class TreeContext {
 	 * Restores tile entity if it was destroyed by block setting.
 	 */
 	public void restoreEntity() {
-		if (entity != null && level.getTileEntity(treePos.x, treePos.y, treePos.z) != entity) {
-			level.setTileEntity(treePos.x, treePos.y, treePos.z, entity);
+		if (entity != null && level.getBlockEntity(treePos.x, treePos.y, treePos.z) != entity) {
+			level.setBlockEntity(treePos.x, treePos.y, treePos.z, entity);
 		}
 	}
 	
@@ -178,12 +178,12 @@ public final class TreeContext {
 			treePos.move(dir.getOpposite());
 		}
 		
-		TileEntityBase entity = level.getTileEntity(treePos.x, treePos.y, treePos.z);
+		BaseBlockEntity entity = level.getBlockEntity(treePos.x, treePos.y, treePos.z);
 		if (entity != null && entity instanceof TreeTileEntity) {
 			this.entity = (TreeTileEntity) entity;
 			maxAge = this.entity.getMaxAge();
 			if (distanceToOrigin >= maxAge) {
-				level.removeTileEntity(treePos.x, treePos.y, treePos.z);
+				level.removeBlockEntity(treePos.x, treePos.y, treePos.z);
 				this.entity = null;
 			}
 		}

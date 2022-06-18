@@ -11,15 +11,15 @@ import net.modificationstation.stationapi.api.client.colour.world.BiomeColours;
 public class TreeClientUtil {
 	public static final BlockColourProvider TREE_BIOME_COLOR_BLOCK = (state, world, pos, index) -> {
 		if (world == null || pos == null)
-			return FoliageColour.method_1083();
+			return FoliageColour.getBiomeColor();
 		else {
 			return BiomeColours.getFoliageColour(world, pos);
 		}
 	};
-	public static final BlockColourProvider SPRUCE_COLOR_BLOCK = (state, world, pos, index) -> FoliageColour.method_1079();
-	public static final BlockColourProvider BIRCH_COLOR_BLOCK = (state, world, pos, index) -> FoliageColour.method_1082();
+	public static final BlockColourProvider SPRUCE_COLOR_BLOCK = (state, world, pos, index) -> FoliageColour.getSpruceColor();
+	public static final BlockColourProvider BIRCH_COLOR_BLOCK = (state, world, pos, index) -> FoliageColour.getBirchColor();
 	
-	public static final ItemColourProvider TREE_BIOME_COLOR_ITEM = (instance, index) -> FoliageColour.method_1083();
-	public static final ItemColourProvider SPRUCE_COLOR_ITEM = (instance, index) -> FoliageColour.method_1079();
-	public static final ItemColourProvider BIRCH_COLOR_ITEM = (instance, index) -> FoliageColour.method_1082();
+	public static final ItemColourProvider TREE_BIOME_COLOR_ITEM = (instance, index) -> FoliageColour.getBiomeColor();
+	public static final ItemColourProvider SPRUCE_COLOR_ITEM = (instance, index) -> FoliageColour.getSpruceColor();
+	public static final ItemColourProvider BIRCH_COLOR_ITEM = (instance, index) -> FoliageColour.getBirchColor();
 }

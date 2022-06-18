@@ -51,6 +51,6 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 	public void createEntity(Level level, int x, int y, int z) {
 		int age = behaviour.getAge(level.rand);
 		TreeTileEntity treeTileEntity = new TreeTileEntity(age);
-		level.setTileEntity(x, y, z, treeTileEntity);
+		level.setBlockEntity(x, y, z, treeTileEntity);
 	}
 }

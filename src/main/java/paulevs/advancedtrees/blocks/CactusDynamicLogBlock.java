@@ -3,7 +3,7 @@ package paulevs.advancedtrees.blocks;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.EntityBase;
+import net.minecraft.entity.BaseEntity;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
@@ -29,7 +29,7 @@ public class CactusDynamicLogBlock extends ATDynamicLogBlock {
 	}
 	
 	@Override
-	public void onEntityCollision(Level level, int x, int y, int z, EntityBase entity) {
+	public void onEntityCollision(Level level, int x, int y, int z, BaseEntity entity) {
 		entity.damage(null, 1);
 	}
 }

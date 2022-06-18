@@ -133,7 +133,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 		for (int i = positions.size() - 1; i >= 0; i--) {
 			Vec3I p = positions.get(i);
-			level.setTile(p.x, p.y, p.z, 0);
+			level.setBlock(p.x, p.y, p.z, 0);
 		}
 	}
 	

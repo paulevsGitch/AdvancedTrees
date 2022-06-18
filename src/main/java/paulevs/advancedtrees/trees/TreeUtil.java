@@ -1,7 +1,7 @@
 package paulevs.advancedtrees.trees;
 
-import net.minecraft.block.BlockBase;
-import net.minecraft.block.Leaves;
+import net.minecraft.block.BaseBlock;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
@@ -57,8 +57,8 @@ public class TreeUtil {
 	// TODO Replace condition with tags
 	public static boolean canGrow(BlockState state) {
 		if (state.getMaterial().isReplaceable()) return true;
-		BlockBase block = state.getBlock();
-		return block instanceof ATLeavesBlock || block instanceof Leaves;
+		BaseBlock block = state.getBlock();
+		return block instanceof ATLeavesBlock || block instanceof LeavesBlock;
 	}
 	
 	/**

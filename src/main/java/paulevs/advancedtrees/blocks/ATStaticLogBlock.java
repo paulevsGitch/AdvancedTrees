@@ -1,6 +1,6 @@
 package paulevs.advancedtrees.blocks;
 
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.maths.MathHelper;
 import net.modificationstation.stationapi.api.block.BlockState;
@@ -43,7 +43,7 @@ public class ATStaticLogBlock extends ATLoglikeBlock {
 	}
 	
 	@Override
-	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
+	public void appendProperties(StateManager.Builder<BaseBlock, BlockState> builder) {
 		super.appendProperties(builder);
 		age = ATBlockProperties.getAge(initMinAge, initMaxAge);
 		builder.add(age);

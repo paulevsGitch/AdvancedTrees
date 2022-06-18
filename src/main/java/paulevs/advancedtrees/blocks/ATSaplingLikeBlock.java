@@ -1,6 +1,6 @@
 package paulevs.advancedtrees.blocks;
 
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.level.Level;
 import net.minecraft.util.maths.Box;
@@ -23,8 +23,8 @@ public class ATSaplingLikeBlock extends ATTemplateNotFullBlock {
 	
 	protected boolean canStay(Level level, int x, int y, int z) {
 		BlockState state = BlocksUtil.getBlockState(level, x, y - 1, z);
-		BlockBase block = state.getBlock();
-		return block == BlockBase.GRASS || block == BlockBase.DIRT || block == BlockBase.FARMLAND;
+		BaseBlock block = state.getBlock();
+		return block == BaseBlock.GRASS || block == BaseBlock.DIRT || block == BaseBlock.FARMLAND;
 	}
 	
 	@Override
@@ -36,8 +36,8 @@ public class ATSaplingLikeBlock extends ATTemplateNotFullBlock {
 	public void onAdjacentBlockUpdate(Level level, int x, int y, int z, int face) {
 		super.onAdjacentBlockUpdate(level, x, y, z, face);
 		if (!canStay(level, x, y, z)) {
-			this.drop(level, x, y, z, level.getTileMeta(x, y, z));
-			level.setTile(x, y, z, 0);
+			this.drop(level, x, y, z, level.getBlockMeta(x, y, z));
+			level.setBlock(x, y, z, 0);
 		}
 	}
 	

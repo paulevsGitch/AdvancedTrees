@@ -1,10 +1,10 @@
 package paulevs.advancedtrees.blocks;
 
-import net.minecraft.block.BlockBase;
+import net.minecraft.block.BaseBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Living;
 import net.minecraft.entity.player.PlayerBase;
-import net.minecraft.item.ItemInstance;
+import net.minecraft.item.ItemStack;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.item.ItemConvertible;
@@ -61,7 +61,7 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	}
 	
 	@Override
-	public void appendProperties(StateManager.Builder<BlockBase, BlockState> builder) {
+	public void appendProperties(StateManager.Builder<BaseBlock, BlockState> builder) {
 		super.appendProperties(builder);
 		builder.add(ATBlockProperties.DIRECTION);
 		builder.add(ATBlockProperties.CONNECTED);
@@ -75,8 +75,8 @@ public class ATLeavesBlock extends TemplateBlockBase {
 		Vec3I pos = new Vec3I(x, y, z).move(state.get(ATBlockProperties.DIRECTION));
 		BlockState state2 = BlocksUtil.getBlockState(level, pos);
 		if (state2.isAir()) {
-			this.drop(level, x, y, z, level.getTileMeta(x, y, z));
-			level.setTile(x, y, z, 0);
+			this.drop(level, x, y, z, level.getBlockMeta(x, y, z));
+			level.setBlock(x, y, z, 0);
 		}
 		state2 = state.with(ATBlockProperties.CONNECTED, canConnect(state2));
 		if (state != state2) {
@@ -90,17 +90,17 @@ public class ATLeavesBlock extends TemplateBlockBase {
 	}
 	
 	@Override
-	public void beforeDestroyedByExplosion(Level level, int x, int y, int z, int meta, float chance) {
+	public void drop(Level level, int x, int y, int z, int meta, float chance) {
 		if (drop != null && level.rand.nextInt(dropChance) == 0) {
-			drop(level, x, y, z, new ItemInstance(drop.asItem()));
+			drop(level, x, y, z, new ItemStack(drop.asItem()));
 		}
 	}
 	
 	@Override
 	public void afterBreak(Level level, PlayerBase player, int x, int y, int z, int meta) {
-		ItemInstance item = player.getHeldItem();
+		ItemStack item = player.getHeldItem();
 		if (item != null && ToolsUtil.isShears(item)) {
-			drop(level, x, y, z, new ItemInstance(this));
+			drop(level, x, y, z, new ItemStack(this));
 		}
 		else {
 			super.afterBreak(level, player, x, y, z, meta);
