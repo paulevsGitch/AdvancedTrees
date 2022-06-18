@@ -154,7 +154,7 @@ public final class TreeContext {
 		
 		BlockState state = block;
 		Direction dir = block.get(ATBlockProperties.DIRECTION);
-		for (byte i = 0; i < 128 && validState(state); i++) {
+		for (byte i = 0; i < 127 && validState(state); i++) {
 			dir = state.get(ATBlockProperties.DIRECTION);
 			treePos.move(dir);
 			state = BlocksUtil.getBlockState(level, treePos);
@@ -199,6 +199,13 @@ public final class TreeContext {
 		if (behaviour != null) {
 			behaviour.grow(this);
 			restoreEntity();
+		}
+	}
+	
+	public void updateAndGrow(Level level, int x, int y, int z, TreeBlockSet set) {
+		update(level, x, y, z, set);
+		if (isValid()) {
+			grow();
 		}
 	}
 	

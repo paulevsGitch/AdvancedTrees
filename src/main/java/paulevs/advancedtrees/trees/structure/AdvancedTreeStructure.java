@@ -7,6 +7,7 @@ import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
 import paulevs.advancedtrees.blocks.ATSaplingBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSaplingBlock;
+import paulevs.advancedtrees.tileentities.TreeBlockEntity;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
@@ -44,7 +45,7 @@ public class AdvancedTreeStructure extends Structure {
 		}
 		
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());
-		block.createEntity(level, x, y, z, behaviour);
+		TreeBlockEntity entity = block.createEntity(level, x, y, z, behaviour);
 		
 		List<Set<Vec3I>> buffers = new ArrayList<>();
 		buffers.add(new HashSet<>());
@@ -54,7 +55,8 @@ public class AdvancedTreeStructure extends Structure {
 		int index = 0;
 		boolean run = true;
 		Vec3I blockPos = new Vec3I();
-		while (run) {
+		final int maxAge = entity.getMaxAge() + 1;
+		for (int age = 0; age <= maxAge && run; age++) {
 			Set<Vec3I> tips = buffers.get(index & 1);
 			Set<Vec3I> newTips = buffers.get((index + 1) & 1);
 			index++;

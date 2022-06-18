@@ -33,11 +33,7 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 	
 	@Override
 	public void onScheduledTick(Level level, int x, int y, int z, Random random) {
-		TreeContext treeContext = TreeContext.getInstance();
-		treeContext.update(level, x, y, z, treeInfo);
-		if (treeContext.isValid()) {
-			treeContext.grow();
-		}
+		TreeContext.getInstance().updateAndGrow(level, x, y, z, treeInfo);
 	}
 	
 	@Override
@@ -45,9 +41,9 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 		return age;
 	}
 	
-	public void createEntity(Level level, int x, int y, int z, TreeBehaviour behaviour) {
-		int age = behaviour.getAge(level.rand);
-		TreeBlockEntity entity = new TreeBlockEntity(age, behaviour);
+	public TreeBlockEntity createEntity(Level level, int x, int y, int z, TreeBehaviour behaviour) {
+		TreeBlockEntity entity = new TreeBlockEntity(behaviour.getAge(level.rand), behaviour);
 		level.setBlockEntity(x, y, z, entity);
+		return entity;
 	}
 }
