@@ -10,13 +10,11 @@ import paulevs.advancedtrees.blocks.ATSaplingBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSaplingBlock;
 import paulevs.advancedtrees.blocks.ATStaticLogBlock;
 import paulevs.advancedtrees.blocks.ATStemBlock;
-import paulevs.advancedtrees.trees.structure.AdvancedTreeStructure;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TreeInfo {
-	private final AdvancedTreeStructure structure;
+public class TreeBlockSet {
 	private final List<ItemConvertible> availableItems;
 	private final ATSpawnerSaplingBlock spawnerSapling;
 	private final ATDynamicLogBlock logDynamic;
@@ -27,10 +25,9 @@ public class TreeInfo {
 	private final BaseBlock log;
 	private final Identifier id;
 	
-	public TreeInfo(Identifier id, ATStaticLogBlock logStatic, ATDynamicLogBlock logDynamic, BaseBlock log, ATStemBlock stem, ATLeavesBlock leaves, ATSaplingBlock sapling, ATSpawnerSaplingBlock spawnerSapling, AdvancedTreeStructure structure) {
+	public TreeBlockSet(Identifier id, ATStaticLogBlock logStatic, ATDynamicLogBlock logDynamic, BaseBlock log, ATStemBlock stem, ATLeavesBlock leaves, ATSaplingBlock sapling, ATSpawnerSaplingBlock spawnerSapling) {
 		this.spawnerSapling = spawnerSapling;
 		this.logDynamic = logDynamic;
-		this.structure = structure;
 		this.logStatic = logStatic;
 		this.sapling = sapling;
 		this.leaves = leaves;
@@ -45,10 +42,6 @@ public class TreeInfo {
 		if (log != null) items.add((ItemConvertible) log);
 		if (leaves != null) items.add(leaves);
 		availableItems = ImmutableList.copyOf(items);
-	}
-	
-	public AdvancedTreeStructure getStructure() {
-		return structure;
 	}
 	
 	public ATStaticLogBlock getLogStatic() {
@@ -90,8 +83,8 @@ public class TreeInfo {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
-		if (!(obj instanceof TreeInfo)) return false;
-		TreeInfo info = (TreeInfo) obj;
+		if (!(obj instanceof TreeBlockSet)) return false;
+		TreeBlockSet info = (TreeBlockSet) obj;
 		return info.id.equals(id);
 	}
 	

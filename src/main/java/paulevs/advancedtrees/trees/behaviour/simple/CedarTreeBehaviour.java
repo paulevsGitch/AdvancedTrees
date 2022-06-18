@@ -7,7 +7,7 @@ import net.modificationstation.stationapi.api.util.math.MathHelper;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
-import paulevs.advancedtrees.trees.info.TreeInfo;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
@@ -19,7 +19,7 @@ public class CedarTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growTrunk(TreeContext context, TreeInfo info, Vec3I pos) {
+	protected void growTrunk(TreeContext context, TreeBlockSet info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I treePos = context.getTreePos();
 		Vec3I blockPos = context.getBlockPos();
@@ -51,7 +51,7 @@ public class CedarTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growBranch(TreeContext context, TreeInfo info, Vec3I pos) {
+	protected void growBranch(TreeContext context, TreeBlockSet info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I blockPos = context.getBlockPos();
 		BlockState state = context.getBlockState();

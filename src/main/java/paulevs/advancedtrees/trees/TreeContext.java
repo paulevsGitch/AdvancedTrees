@@ -6,8 +6,9 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLoglikeBlock;
-import paulevs.advancedtrees.tileentities.TreeTileEntity;
-import paulevs.advancedtrees.trees.info.TreeInfo;
+import paulevs.advancedtrees.tileentities.TreeBlockEntity;
+import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
@@ -17,12 +18,13 @@ public final class TreeContext {
 	private final Vec3I treePos = new Vec3I();
 	private final Vec3I blockPos = new Vec3I();
 	private final Vec3I splitPos = new Vec3I();
+	private TreeBehaviour behaviour;
+	private TreeBlockEntity entity;
 	private int distanceToOrigin;
 	private int distanceToSplit;
 	private int generation;
 	private BlockState block;
-	private TreeTileEntity entity;
-	private TreeInfo info;
+	private TreeBlockSet info;
 	private Level level;
 	private int maxAge;
 	
@@ -121,9 +123,9 @@ public final class TreeContext {
 	
 	/**
 	 * Provide information about current tree.
-	 * @return {@link TreeInfo}.
+	 * @return {@link TreeBlockSet}.
 	 */
-	public TreeInfo getTreeInfo() {
+	public TreeBlockSet getTreeInfo() {
 		return info;
 	}
 	
@@ -133,9 +135,9 @@ public final class TreeContext {
 	 * @param x X coordinate
 	 * @param y Y coordinate
 	 * @param z Z coordinate
-	 * @param info {@link TreeInfo}
+	 * @param info {@link TreeBlockSet}
 	 */
-	public void update(Level level, int x, int y, int z, TreeInfo info) {
+	public void update(Level level, int x, int y, int z, TreeBlockSet info) {
 		this.level = level;
 		this.info = info;
 		
@@ -179,13 +181,24 @@ public final class TreeContext {
 		}
 		
 		BaseBlockEntity entity = level.getBlockEntity(treePos.x, treePos.y, treePos.z);
-		if (entity != null && entity instanceof TreeTileEntity) {
-			this.entity = (TreeTileEntity) entity;
+		if (entity != null && entity instanceof TreeBlockEntity) {
+			this.entity = (TreeBlockEntity) entity;
 			maxAge = this.entity.getMaxAge();
 			if (distanceToOrigin >= maxAge) {
 				level.removeBlockEntity(treePos.x, treePos.y, treePos.z);
 				this.entity = null;
 			}
+		}
+		
+		if (this.entity != null) {
+			behaviour = this.entity.getBehaviour();
+		}
+	}
+	
+	public void grow() {
+		if (behaviour != null) {
+			behaviour.grow(this);
+			restoreEntity();
 		}
 	}
 	

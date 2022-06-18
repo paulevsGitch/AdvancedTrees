@@ -18,6 +18,6 @@ public class LargeOakMixin {
 		cancellable = true
 	)
 	private void at_replaceTree(Level level, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> info) {
-		info.setReturnValue(VanillaTrees.OAK.getStructure().generate(level, random, x, y, z));
+		info.setReturnValue(VanillaTrees.LARGE_OAK_STRUCTURE.generate(level, random, x, y, z));
 	}
 }

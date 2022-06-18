@@ -19,10 +19,10 @@ public class CreativeListener {
 	public void onTabInit(TabRegistryEvent event) {
 		tab = new SimpleTab(AdvancedTrees.makeID("at_tab"), (ItemConvertible) BaseBlock.LOG);
 		event.register(tab);
-		addItems(VanillaTrees.OAK.getAvailableItems());
-		addItems(VanillaTrees.SPRUCE.getAvailableItems());
-		addItems(VanillaTrees.BIRCH.getAvailableItems());
-		addItems(VanillaTrees.CACTUS.getAvailableItems());
+		addItems(VanillaTrees.OAK_BLOCKS.getAvailableItems());
+		addItems(VanillaTrees.SPRUCE_BLOCKS.getAvailableItems());
+		addItems(VanillaTrees.BIRCH_BLOCKS.getAvailableItems());
+		addItems(VanillaTrees.CACTUS_BLOCKS.getAvailableItems());
 	}
 	
 	private void addItems(List<ItemConvertible> items) {

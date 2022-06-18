@@ -15,16 +15,16 @@ public class ColorListener {
 	@EventListener
 	public void registerBlockColors(BlockColoursRegisterEvent event) {
 		BlockColours colors = event.getBlockColours();
-		colors.registerColourProvider(TreeClientUtil.TREE_BIOME_COLOR_BLOCK, VanillaTrees.OAK.getLeaves());
-		colors.registerColourProvider(TreeClientUtil.SPRUCE_COLOR_BLOCK, VanillaTrees.SPRUCE.getLeaves());
-		colors.registerColourProvider(TreeClientUtil.BIRCH_COLOR_BLOCK, VanillaTrees.BIRCH.getLeaves());
+		colors.registerColourProvider(TreeClientUtil.TREE_BIOME_COLOR_BLOCK, VanillaTrees.OAK_BLOCKS.getLeaves());
+		colors.registerColourProvider(TreeClientUtil.SPRUCE_COLOR_BLOCK, VanillaTrees.SPRUCE_BLOCKS.getLeaves());
+		colors.registerColourProvider(TreeClientUtil.BIRCH_COLOR_BLOCK, VanillaTrees.BIRCH_BLOCKS.getLeaves());
 	}
 	
 	@EventListener
 	public void registerItemColors(ItemColoursRegisterEvent event) {
 		ItemColours colors = event.getItemColours();
-		colors.register(TreeClientUtil.TREE_BIOME_COLOR_ITEM, VanillaTrees.OAK.getLeaves());
-		colors.register(TreeClientUtil.SPRUCE_COLOR_ITEM, VanillaTrees.SPRUCE.getLeaves());
-		colors.register(TreeClientUtil.BIRCH_COLOR_ITEM, VanillaTrees.BIRCH.getLeaves());
+		colors.register(TreeClientUtil.TREE_BIOME_COLOR_ITEM, VanillaTrees.OAK_BLOCKS.getLeaves());
+		colors.register(TreeClientUtil.SPRUCE_COLOR_ITEM, VanillaTrees.SPRUCE_BLOCKS.getLeaves());
+		colors.register(TreeClientUtil.BIRCH_COLOR_ITEM, VanillaTrees.BIRCH_BLOCKS.getLeaves());
 	}
 }

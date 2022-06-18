@@ -14,8 +14,6 @@ import paulevs.advancedtrees.blocks.CactusLogBlock;
 import paulevs.advancedtrees.blocks.CactusSpawnerSaplingBlock;
 import paulevs.advancedtrees.blocks.CactusStaticLogBlock;
 import paulevs.advancedtrees.blocks.CactusStemBlock;
-import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
-import paulevs.advancedtrees.trees.structure.AdvancedTreeStructure;
 
 public class TreeInfoBuilder {
 	private static final TreeInfoBuilder INSTANCE = new TreeInfoBuilder();
@@ -34,7 +32,7 @@ public class TreeInfoBuilder {
 	private TreeInfoBuilder() {}
 	
 	/**
-	 * Start a process of building new {@link TreeInfo} instance.
+	 * Start a process of building new {@link TreeBlockSet} instance.
 	 * @param id {@link Identifier} that tree will use
 	 * @return {@link TreeInfoBuilder} instance.
 	 */
@@ -57,7 +55,7 @@ public class TreeInfoBuilder {
 	}
 	
 	/**
-	 * Add normal (full) log block to the {@link TreeInfo}.
+	 * Add normal (full) log block to the {@link TreeBlockSet}.
 	 * @param log {@link BaseBlock} to add as log
 	 * @return same {@link TreeInfoBuilder} instance
 	 */
@@ -157,19 +155,17 @@ public class TreeInfoBuilder {
 		return addSpawnerSapling(new CactusSpawnerSaplingBlock(makeID("spawner_sapling")));
 	}
 	
-	public TreeInfo build(TreeBehaviour behaviour) {
-		AdvancedTreeStructure structure = new AdvancedTreeStructure(logDynamic, sapling == null ? logDynamic::canPlaceAt : sapling::canPlaceAt);
+	public TreeBlockSet build() {
 		if (logStatic != null) logStatic.setDrop(stemBlock);
 		if (logDynamic != null) logDynamic.setDrop(stemBlock);
 		if (leaves != null) leaves.setDrop(sapling, saplingDropChance);
-		if (spawnerSapling != null) spawnerSapling.setStructure(structure);
 		if (sapling != null) sapling.setLogAndLeaves(logDynamic, leaves);
-		TreeInfo info = new TreeInfo(id, logStatic, logDynamic, log, stemBlock, leaves, sapling, spawnerSapling, structure);
-		if (logDynamic != null) logDynamic.setTree(behaviour, info);
+		TreeBlockSet info = new TreeBlockSet(id, logStatic, logDynamic, log, stemBlock, leaves, sapling, spawnerSapling);
+		if (logDynamic != null) logDynamic.setTree(info);
 		return info;
 	}
 	
-	public static TreeInfo simpleTree(Identifier id, int minAge, int maxAge, int saplingDropChance, TreeBehaviour behaviour) {
+	public static TreeBlockSet simpleTree(Identifier id, int minAge, int maxAge, int saplingDropChance) {
 		return start(id, minAge, maxAge)
 			.addSimpleLog()
 			.addSimpleStem()
@@ -178,33 +174,16 @@ public class TreeInfoBuilder {
 			.addSimpleSapling()
 			.addSimpleSpawnerSapling()
 			.addSimpleLeaves(saplingDropChance)
-			.build(behaviour);
+			.build();
 	}
 	
-	public static TreeInfo cactusTree(Identifier id, int minAge, int maxAge, TreeBehaviour behaviour) {
+	public static TreeBlockSet cactusTree(Identifier id, int minAge, int maxAge) {
 		return start(id, minAge, maxAge)
 			.addCactusLog()
 			.addCactusStem()
 			.addCactusStaticLog()
 			.addCactusDynamicLog()
 			.addCactusSpawnerSapling()
-			.build(behaviour);
+			.build();
 	}
-	
-	/*public static TreeInfo variation(Identifier id, TreeInfo info, TreeBehaviour behaviour) {
-		SpawnChecker checker = info.getSapling() == null ? info.getLogDynamic()::canPlaceAt : info.getSapling()::canPlaceAt;
-		AdvancedTreeStructure structure = new AdvancedTreeStructure(info.getLogDynamic(), checker);
-		TreeInfo result = new TreeInfo(
-			id,
-			info.getLogStatic(),
-			info.getLogDynamic(),
-			info.getLog(),
-			info.getStem(),
-			info.getLeaves(),
-			info.getSapling(),
-			info.getSpawnerSapling(),
-			structure
-		);
-		return result;
-	}*/
 }

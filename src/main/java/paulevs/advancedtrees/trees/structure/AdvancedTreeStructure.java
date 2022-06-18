@@ -5,7 +5,10 @@ import net.minecraft.level.structure.Structure;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATDynamicLogBlock;
+import paulevs.advancedtrees.blocks.ATSaplingBlock;
 import paulevs.advancedtrees.blocks.ATSpawnerSaplingBlock;
+import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 
@@ -18,11 +21,17 @@ import java.util.Set;
 public class AdvancedTreeStructure extends Structure {
 	private static final Direction[] DIRECTIONS = Direction.values();
 	private final ATDynamicLogBlock block;
+	private final TreeBehaviour behaviour;
 	private final SpawnChecker checker;
 	
-	public AdvancedTreeStructure(ATDynamicLogBlock block, SpawnChecker checker) {
+	public AdvancedTreeStructure(TreeBlockSet info, TreeBehaviour behaviour, SpawnChecker checker) {
+		this.behaviour = behaviour;
 		this.checker = checker;
-		this.block = block;
+		this.block = info.getLogDynamic();
+		ATSaplingBlock sapling = info.getSapling();
+		if (sapling != null) sapling.setBehaviour(behaviour);
+		ATSpawnerSaplingBlock spawnerSapling = info.getSpawnerSapling();
+		if (spawnerSapling != null) spawnerSapling.setStructure(this);
 	}
 	
 	@Override
@@ -35,7 +44,7 @@ public class AdvancedTreeStructure extends Structure {
 		}
 		
 		BlocksUtil.setBlockState(level, x, y, z, block.getDefaultState());
-		block.createEntity(level, x, y, z);
+		block.createEntity(level, x, y, z, behaviour);
 		
 		List<Set<Vec3I>> buffers = new ArrayList<>();
 		buffers.add(new HashSet<>());

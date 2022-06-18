@@ -18,6 +18,6 @@ public class CactusMixin {
 		cancellable = true
 	)
 	private void at_replaceTree(Level level, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> info) {
-		info.setReturnValue(VanillaTrees.CACTUS.getStructure().generate(level, random, x, y, z));
+		info.setReturnValue(VanillaTrees.CACTUS_STRUCTURE.generate(level, random, x, y, z));
 	}
 }

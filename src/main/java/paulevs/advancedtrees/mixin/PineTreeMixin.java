@@ -18,6 +18,6 @@ public class PineTreeMixin {
 		cancellable = true
 	)
 	private void at_replaceTree(Level level, Random random, int x, int y, int z, CallbackInfoReturnable<Boolean> info) {
-		info.setReturnValue(VanillaTrees.SPRUCE.getStructure().generate(level, random, x, y, z));
+		info.setReturnValue(VanillaTrees.PINE_STRUCTURE.generate(level, random, x, y, z));
 	}
 }

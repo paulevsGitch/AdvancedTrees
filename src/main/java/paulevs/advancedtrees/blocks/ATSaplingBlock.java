@@ -4,6 +4,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
+import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
 
@@ -12,6 +13,7 @@ import java.util.Random;
 public class ATSaplingBlock extends ATSaplingLikeBlock {
 	private ATDynamicLogBlock log;
 	private ATLeavesBlock leaves;
+	private TreeBehaviour behaviour;
 	
 	public ATSaplingBlock(Identifier identifier) {
 		super(identifier);
@@ -24,6 +26,11 @@ public class ATSaplingBlock extends ATSaplingLikeBlock {
 	public void setLogAndLeaves(ATDynamicLogBlock log, ATLeavesBlock leaves) {
 		this.leaves = leaves;
 		this.log = log;
+	}
+	
+	public void setBehaviour(TreeBehaviour behaviour) {
+		if (this.behaviour != null) return;
+		this.behaviour = behaviour;
 	}
 	
 	@Override
@@ -41,7 +48,7 @@ public class ATSaplingBlock extends ATSaplingLikeBlock {
 		else if (canGrowTree(level, x, y, z)) {
 			BlocksUtil.setBlockState(level, x, y, z, log.getDefaultState());
 			BlocksUtil.setBlockState(level, x, y + 1, z, leaves.getDefaultState().with(ATBlockProperties.CONNECTED, true));
-			log.createEntity(level, x, y, z);
+			log.createEntity(level, x, y, z, behaviour);
 			ClientUtil.updateArea(level, x, y, z, x, y + 1, z);
 		}
 	}

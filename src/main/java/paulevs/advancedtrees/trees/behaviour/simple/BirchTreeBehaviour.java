@@ -8,7 +8,7 @@ import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
 import paulevs.advancedtrees.trees.behaviour.crown.PatternCrown;
-import paulevs.advancedtrees.trees.info.TreeInfo;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
@@ -22,7 +22,7 @@ public class BirchTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growTrunk(TreeContext context, TreeInfo info, Vec3I pos) {
+	protected void growTrunk(TreeContext context, TreeBlockSet info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I treePos = context.getTreePos();
 		Vec3I blockPos = context.getBlockPos();
@@ -55,7 +55,7 @@ public class BirchTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growBranch(TreeContext context, TreeInfo info, Vec3I pos) {
+	protected void growBranch(TreeContext context, TreeBlockSet info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I blockPos = context.getBlockPos();
 		BlockState state = context.getBlockState();
@@ -88,7 +88,7 @@ public class BirchTreeBehaviour extends SimpleTreeBehaviour {
 	}
 	
 	@Override
-	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeInfo info) {
+	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeBlockSet info) {
 		int index = MathUtil.clamp((int) (dis * CROWNS.length * 1.5F / maxAge), 0, CROWNS.length - 1);
 		CROWNS[index].place(level, blockPos, info);
 	}

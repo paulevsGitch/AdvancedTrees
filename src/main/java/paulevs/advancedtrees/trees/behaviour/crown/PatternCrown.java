@@ -5,7 +5,7 @@ import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.util.math.Direction;
 import paulevs.advancedtrees.blocks.ATBlockProperties;
 import paulevs.advancedtrees.blocks.ATLeavesBlock;
-import paulevs.advancedtrees.trees.info.TreeInfo;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.MathUtil;
@@ -85,7 +85,7 @@ public class PatternCrown implements TreeCrown {
 	}
 	
 	@Override
-	public void place(Level level, Vec3I pos, TreeInfo info) {
+	public void place(Level level, Vec3I pos, TreeBlockSet info) {
 		Vec3I p = new Vec3I();
 		ATLeavesBlock leafBlock = info.getLeaves();
 		blocks.forEach(blockInfo -> {

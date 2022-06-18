@@ -4,17 +4,16 @@ import net.minecraft.block.material.Material;
 import net.minecraft.level.Level;
 import net.modificationstation.stationapi.api.block.BlockState;
 import net.modificationstation.stationapi.api.registry.Identifier;
-import paulevs.advancedtrees.tileentities.TreeTileEntity;
+import paulevs.advancedtrees.tileentities.TreeBlockEntity;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
-import paulevs.advancedtrees.trees.info.TreeInfo;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.util.ToolsUtil;
 
 import java.util.Random;
 
 public class ATDynamicLogBlock extends ATLoglikeBlock {
-	private TreeBehaviour behaviour;
-	private TreeInfo treeInfo;
+	private TreeBlockSet treeInfo;
 	private final int age;
 	
 	public ATDynamicLogBlock(Identifier identifier, int age) {
@@ -28,8 +27,7 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 		this.age = age;
 	}
 	
-	public void setTree(TreeBehaviour behaviour, TreeInfo treeInfo) {
-		this.behaviour = behaviour;
+	public void setTree(TreeBlockSet treeInfo) {
 		this.treeInfo = treeInfo;
 	}
 	
@@ -38,8 +36,7 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 		TreeContext treeContext = TreeContext.getInstance();
 		treeContext.update(level, x, y, z, treeInfo);
 		if (treeContext.isValid()) {
-			behaviour.grow(treeContext);
-			treeContext.restoreEntity();
+			treeContext.grow();
 		}
 	}
 	
@@ -48,9 +45,9 @@ public class ATDynamicLogBlock extends ATLoglikeBlock {
 		return age;
 	}
 	
-	public void createEntity(Level level, int x, int y, int z) {
+	public void createEntity(Level level, int x, int y, int z, TreeBehaviour behaviour) {
 		int age = behaviour.getAge(level.rand);
-		TreeTileEntity treeTileEntity = new TreeTileEntity(age);
-		level.setBlockEntity(x, y, z, treeTileEntity);
+		TreeBlockEntity entity = new TreeBlockEntity(age, behaviour);
+		level.setBlockEntity(x, y, z, entity);
 	}
 }

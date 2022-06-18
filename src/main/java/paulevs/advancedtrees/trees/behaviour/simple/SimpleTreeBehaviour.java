@@ -9,7 +9,7 @@ import paulevs.advancedtrees.blocks.ATLeavesBlock;
 import paulevs.advancedtrees.trees.TreeContext;
 import paulevs.advancedtrees.trees.TreeUtil;
 import paulevs.advancedtrees.trees.behaviour.TreeBehaviour;
-import paulevs.advancedtrees.trees.info.TreeInfo;
+import paulevs.advancedtrees.trees.info.TreeBlockSet;
 import paulevs.bhcore.storage.vector.Vec3I;
 import paulevs.bhcore.util.BlocksUtil;
 import paulevs.bhcore.util.ClientUtil;
@@ -28,7 +28,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 	
 	@Override
 	public void grow(TreeContext context) {
-		TreeInfo info = context.getTreeInfo();
+		TreeBlockSet info = context.getTreeInfo();
 		Level level = context.getLevel();
 		Vec3I blockPos = context.getBlockPos();
 		Direction dir = context.getBlockState().get(ATBlockProperties.DIRECTION);
@@ -58,7 +58,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		return MathUtil.randomRange(maxAge * 2 / 3, maxAge, random);
 	}
 	
-	protected void growTrunk(TreeContext context, TreeInfo info, Vec3I pos) {
+	protected void growTrunk(TreeContext context, TreeBlockSet info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I treePos = context.getTreePos();
 		Vec3I blockPos = context.getBlockPos();
@@ -87,7 +87,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 	}
 	
-	protected void growBranch(TreeContext context, TreeInfo info, Vec3I pos) {
+	protected void growBranch(TreeContext context, TreeBlockSet info, Vec3I pos) {
 		int dist = context.getDistanceToOrigin();
 		Vec3I blockPos = context.getBlockPos();
 		BlockState state = context.getBlockState();
@@ -119,7 +119,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 	}
 	
-	protected void removeOldLeaves(Level level, Vec3I blockPos, TreeInfo info) {
+	protected void removeOldLeaves(Level level, Vec3I blockPos, TreeBlockSet info) {
 		Vec3I pos = new Vec3I();
 		Vec3I pos2 = new Vec3I();
 		List<Vec3I> positions = new ArrayList<>();
@@ -137,7 +137,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 	}
 	
-	protected void removeOldLeaves(Level level, Vec3I blockPos, Vec3I pos, List<Vec3I> positions, TreeInfo info) {
+	protected void removeOldLeaves(Level level, Vec3I blockPos, Vec3I pos, List<Vec3I> positions, TreeBlockSet info) {
 		ATLeavesBlock leaves = info.getLeaves();
 		positions.add(blockPos.clone());
 		for (Direction dir: MathUtil.DIRECTIONS) {
@@ -149,7 +149,7 @@ public class SimpleTreeBehaviour implements TreeBehaviour {
 		}
 	}
 	
-	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeInfo info) {
+	protected void growNewLeaves(Level level, Vec3I blockPos, Vec3I pos, int dis, TreeBlockSet info) {
 		BlockState defaultState = info.getLeaves().getDefaultState();
 		BlockState connected = defaultState.with(ATBlockProperties.CONNECTED, true);
 		ATLeavesBlock leaves = info.getLeaves();
