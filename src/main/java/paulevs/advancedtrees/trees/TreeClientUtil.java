@@ -11,7 +11,7 @@ import net.modificationstation.stationapi.api.client.colour.world.BiomeColours;
 public class TreeClientUtil {
 	public static final BlockColourProvider TREE_BIOME_COLOR_BLOCK = (state, world, pos, index) -> {
 		if (world == null || pos == null)
-			return FoliageColour.getBiomeColor();
+			return FoliageColour.getOakColor();
 		else {
 			return BiomeColours.getFoliageColour(world, pos);
 		}
@@ -19,7 +19,7 @@ public class TreeClientUtil {
 	public static final BlockColourProvider SPRUCE_COLOR_BLOCK = (state, world, pos, index) -> FoliageColour.getSpruceColor();
 	public static final BlockColourProvider BIRCH_COLOR_BLOCK = (state, world, pos, index) -> FoliageColour.getBirchColor();
 	
-	public static final ItemColourProvider TREE_BIOME_COLOR_ITEM = (instance, index) -> FoliageColour.getBiomeColor();
+	public static final ItemColourProvider TREE_BIOME_COLOR_ITEM = (instance, index) -> FoliageColour.getOakColor();
 	public static final ItemColourProvider SPRUCE_COLOR_ITEM = (instance, index) -> FoliageColour.getSpruceColor();
 	public static final ItemColourProvider BIRCH_COLOR_ITEM = (instance, index) -> FoliageColour.getBirchColor();
 }

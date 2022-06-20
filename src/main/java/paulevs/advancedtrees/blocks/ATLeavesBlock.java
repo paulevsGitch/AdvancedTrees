@@ -26,6 +26,7 @@ public class ATLeavesBlock extends TemplateBlockBase {
 		setSounds(GRASS_SOUNDS);
 		ToolsUtil.setShears(this, 0);
 		BurnableUtil.registerBurnable(this, 30, 60);
+		this.setLightOpacity(64);
 	}
 	
 	public ATLeavesBlock(Identifier identifier, Material material) {
