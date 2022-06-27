@@ -56,7 +56,7 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 		Direction dir = state.get(ATBlockProperties.DIRECTION);
 		int age = getAge(state);
 		updateBox(age, dir);
-		return BOUNDING_BOX.method_102(x, y, z);
+		return BOUNDING_BOX.move(x, y, z);
 	}
 	
 	@Override
@@ -136,7 +136,7 @@ public class ATLoglikeBlock extends ATTemplateNotFullBlock {
 	protected void updateBox(int age, Direction dir) {
 		float min = (7 - age) / 16F;
 		float max = (9 + age) / 16F;
-		BOUNDING_BOX.method_99(min, min, min, max, max, max);
+		BOUNDING_BOX.set(min, min, min, max, max, max);
 		
 		float distance = min - (max - 1F);
 		boolean negative = dir.direction == AxisDirection.NEGATIVE;

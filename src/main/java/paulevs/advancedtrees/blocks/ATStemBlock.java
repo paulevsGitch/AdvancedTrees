@@ -52,7 +52,7 @@ public class ATStemBlock extends ATTemplateNotFullBlock {
 		BlockState state = BlocksUtil.getBlockState(level, x, y, z);
 		if (state.getBlock() != this) return super.getCollisionShape(level, x, y, z);
 		updateBox(state.get(ATBlockProperties.AXIS));
-		return BOUNDING_BOX.method_102(x, y, z);
+		return BOUNDING_BOX.move(x, y, z);
 	}
 	
 	@Override
@@ -76,7 +76,7 @@ public class ATStemBlock extends ATTemplateNotFullBlock {
 	}
 	
 	protected void updateBox(Axis axis) {
-		BOUNDING_BOX.method_99(0.25F, 0.25F, 0.25F, 0.75F, 0.75F, 0.75F);
+		BOUNDING_BOX.set(0.25F, 0.25F, 0.25F, 0.75F, 0.75F, 0.75F);
 		if (axis == Axis.X) {
 			BOUNDING_BOX.minX = 0.0F;
 			BOUNDING_BOX.maxX = 1.0F;

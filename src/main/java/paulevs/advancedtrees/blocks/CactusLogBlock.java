@@ -16,7 +16,7 @@ public class CactusLogBlock extends ATStemBlock {
 	
 	@Override
 	protected void updateBox(Axis axis) {
-		BOUNDING_BOX.method_99(0.0625F, 0.0625F, 0.0625F, 0.9375F, 0.9375F, 0.9375F);
+		BOUNDING_BOX.set(0.0625F, 0.0625F, 0.0625F, 0.9375F, 0.9375F, 0.9375F);
 		if (axis == Axis.X) {
 			BOUNDING_BOX.minX = 0.0F;
 			BOUNDING_BOX.maxX = 1.0F;

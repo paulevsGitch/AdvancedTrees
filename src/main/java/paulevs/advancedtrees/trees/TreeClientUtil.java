@@ -2,7 +2,7 @@ package paulevs.advancedtrees.trees;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.block.FoliageColour;
+import net.minecraft.client.render.block.FoliageColor;
 import net.minecraft.util.maths.BlockPos;
 import net.modificationstation.stationapi.api.client.colour.block.BlockColourProvider;
 import net.modificationstation.stationapi.api.client.colour.item.ItemColourProvider;
@@ -17,23 +17,23 @@ public class TreeClientUtil {
 	private static final OpenSimplexNoise NOISE_VAL = new OpenSimplexNoise("foliage_val".hashCode());
 	
 	public static final BlockColourProvider TREE_BIOME_COLOR_BLOCK = (state, world, pos, index) -> {
-		if (world == null || pos == null) return FoliageColour.getOakColor();
+		if (world == null || pos == null) return FoliageColor.getOakColor();
 		else return mutateColor(BiomeColours.getFoliageColour(world, pos), pos);
 	};
 	public static final BlockColourProvider SPRUCE_COLOR_BLOCK = (state, world, pos, index) -> {
-		int rgb = FoliageColour.getSpruceColor();
+		int rgb = FoliageColor.getSpruceColor();
 		if (world == null || pos == null) return rgb;
 		else return mutateColor(rgb, pos);
 	};
 	public static final BlockColourProvider BIRCH_COLOR_BLOCK = (state, world, pos, index) -> {
-		int rgb = FoliageColour.getBirchColor();
+		int rgb = FoliageColor.getBirchColor();
 		if (world == null || pos == null) return rgb;
 		else return mutateColor(rgb, pos);
 	};
 	
-	public static final ItemColourProvider TREE_BIOME_COLOR_ITEM = (instance, index) -> FoliageColour.getOakColor();
-	public static final ItemColourProvider SPRUCE_COLOR_ITEM = (instance, index) -> FoliageColour.getSpruceColor();
-	public static final ItemColourProvider BIRCH_COLOR_ITEM = (instance, index) -> FoliageColour.getBirchColor();
+	public static final ItemColourProvider TREE_BIOME_COLOR_ITEM = (instance, index) -> FoliageColor.getOakColor();
+	public static final ItemColourProvider SPRUCE_COLOR_ITEM = (instance, index) -> FoliageColor.getSpruceColor();
+	public static final ItemColourProvider BIRCH_COLOR_ITEM = (instance, index) -> FoliageColor.getBirchColor();
 	
 	private static final float[] HSV_CACHE = new float[3];
 	private static int mutateColor(int rgb, BlockPos pos) {
